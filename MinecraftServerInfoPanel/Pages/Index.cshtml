@@ -4,6 +4,24 @@
     ViewData["Title"] = "Home page";
 }
 
-    <form method="post">
-        <input type="submit" value="Ściągnij dane z konsoli" class="btn btn-success" />
-    </form>
+<form method="post">
+    <input type="submit" value="Ściągnij dane z konsoli" class="btn btn-success" />
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Data</th>
+            <th scope="col">Informacja</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model.Logs)
+        {
+            <tr>
+                <td>@log.Date</td>
+                <td>@log.Information</td>
+            </tr>
+        }
+    </tbody>
+</table>

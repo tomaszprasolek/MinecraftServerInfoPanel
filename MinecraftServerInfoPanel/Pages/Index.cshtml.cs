@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MinecraftServerInfoPanel.BL;
 using MinecraftServerInfoPanel.Database;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MinecraftServerInfoPanel.Pages
 {
@@ -16,6 +16,8 @@ namespace MinecraftServerInfoPanel.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly IConsoleDataDowloader consoleDataDowloader;
         private readonly MinecraftDbContext dbContext;
+
+        public List<DbConsoleLog> Logs { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger,
             IConsoleDataDowloader consoleDataDowloader,
@@ -28,10 +30,10 @@ namespace MinecraftServerInfoPanel.Pages
 
         public void OnGet()
         {
-
+            Logs = dbContext.ConsoleLogs.OrderByDescending(x => x.Date).ToList();
         }
 
-        public async Task OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             List<ConsoleLog> result = await consoleDataDowloader.Download();
 
@@ -57,6 +59,8 @@ namespace MinecraftServerInfoPanel.Pages
                 }
                 dbContext.SaveChanges();
             }
+
+            return RedirectToPage("Index");
         }
 
         private bool IsNeededToSendEmail(string text) => text.Contains("connected");
