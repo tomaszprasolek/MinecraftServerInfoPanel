@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MinecraftServerInfoPanel.BL;
 using MinecraftServerInfoPanel.Database;
 
 namespace MinecraftServerInfoPanel
@@ -29,6 +30,8 @@ namespace MinecraftServerInfoPanel
             {
                 options.UseSqlServer(Configuration.GetConnectionString("MinecraftDb"));
             });
+
+            services.AddSingleton<IConsoleDataDowloader, ConsoleDataDowloader>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
