@@ -19,6 +19,9 @@ namespace MinecraftServerInfoPanel.Pages
 
         public List<DbConsoleLog> Logs { get; set; }
 
+        [TempData]
+        public string Message { get; set; }
+
         public IndexModel(ILogger<IndexModel> logger,
             IConsoleDataDowloader consoleDataDowloader,
             MinecraftDbContext dbContext)
@@ -58,7 +61,10 @@ namespace MinecraftServerInfoPanel.Pages
                     dbContext.ConsoleLogs.Add(entity);
                 }
                 dbContext.SaveChanges();
+                TempData["Message"] = "Pobrano nowe wpisy z serwera.";
             }
+            else
+                TempData["Message"] = "Nie pobrano żadnych danych z serwera.";
 
             return RedirectToPage("Index");
         }
