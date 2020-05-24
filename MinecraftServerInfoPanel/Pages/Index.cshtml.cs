@@ -35,6 +35,8 @@ namespace MinecraftServerInfoPanel.Pages
         {
             List<ConsoleLog> result = await consoleDataDowloader.Download();
 
+            var maxDateInDb = dbContext.ConsoleLogs.Max(x => x.Date);
+
             var dbEntities = result
                 .Where(r => r.text.Contains("Running AutoCompaction...") == false)
                 .Select(r => new DbConsoleLog
@@ -43,6 +45,7 @@ namespace MinecraftServerInfoPanel.Pages
                     Information = r.text[26..].Trim(),
                     IsNeededToSendEmail = IsNeededToSendEmail(r.text)
                 })
+                .Where(r => r.Date > maxDateInDb)
                 .ToList();
 
             if (dbEntities.Count > 0)
