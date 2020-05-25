@@ -1,0 +1,12 @@
+﻿@page
+@model MinecraftServerInfoPanel.Pages.UsersModel
+@{
+    ViewData["Title"] = "Użytkownicy";
+}
+
+<p>Czas spędzony na graniu na serwerze (hh/mm/ss).</p>
+
+@foreach (var user in Model.Users)
+{
+    <p>Użytkownik <b>@user.Name</b> grał @user.PlayTimeFriendly</p>
+}
