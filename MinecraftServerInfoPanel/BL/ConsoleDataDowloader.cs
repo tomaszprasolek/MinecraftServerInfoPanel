@@ -11,14 +11,13 @@ namespace MinecraftServerInfoPanel.BL
 {
     public class ConsoleDataDowloader : IConsoleDataDowloader
     {
+        private readonly IConfiguration configuration;
         HttpClient client = new HttpClient();
 
         public ConsoleDataDowloader(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public async Task<List<ConsoleLog>> Download()
         {
@@ -34,7 +33,7 @@ namespace MinecraftServerInfoPanel.BL
 
         private async Task<Dictionary<string, ConsoleLog>> GetConsole(HttpClient client)
         {
-            HttpResponseMessage consoleResponse = await client.GetAsync(Configuration["MinecraftServer:ConsoleUrl"]);
+            HttpResponseMessage consoleResponse = await client.GetAsync(configuration["MinecraftServer:ConsoleUrl"]);
 
             var contentType = consoleResponse.Content.Headers.ContentType;
 
@@ -52,11 +51,11 @@ namespace MinecraftServerInfoPanel.BL
             var formContent = new FormUrlEncodedContent(new[]
             {
                  new KeyValuePair<string, string>("akcja", "logowanie"),
-                 new KeyValuePair<string, string>("email", Configuration["MinecraftServer:Email"]),
-                 new KeyValuePair<string, string>("haslo", Configuration["MinecraftServer:Password"]),
+                 new KeyValuePair<string, string>("email", configuration["MinecraftServer:Email"]),
+                 new KeyValuePair<string, string>("haslo", configuration["MinecraftServer:Password"]),
             });
 
-            HttpResponseMessage responseMessage = await client.PostAsync(Configuration["MinecraftServer:LoginUrl"], formContent);
+            HttpResponseMessage responseMessage = await client.PostAsync(configuration["MinecraftServer:LoginUrl"], formContent);
             if (responseMessage.StatusCode == HttpStatusCode.OK)
                 Console.WriteLine("Poprawnie zalogowano do serwera.");
             else
