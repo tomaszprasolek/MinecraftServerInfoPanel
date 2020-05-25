@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MinecraftServerInfoPanel.BL;
+using MinecraftServerInfoPanel.BL.EmailSender;
+using MinecraftServerInfoPanel.BL.RecentActivityEmailSender;
 using MinecraftServerInfoPanel.Database;
 
 namespace MinecraftServerInfoPanel
@@ -32,6 +29,8 @@ namespace MinecraftServerInfoPanel
             });
 
             services.AddSingleton<IConsoleDataDowloader, ConsoleDataDowloader>();
+            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<IRecentActivityEmailSender, RecentActivityEmailSender>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

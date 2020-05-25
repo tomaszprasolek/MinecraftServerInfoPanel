@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace MinecraftServerInfoPanel.BL.EmailSender
 {
-
     public class EmailSender : IEmailSender
 	{
         private readonly IConfiguration configuration;

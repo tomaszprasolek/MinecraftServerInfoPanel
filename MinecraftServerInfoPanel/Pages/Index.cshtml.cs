@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MinecraftServerInfoPanel.BL;
+using MinecraftServerInfoPanel.BL.RecentActivityEmailSender;
 using MinecraftServerInfoPanel.Database;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace MinecraftServerInfoPanel.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly IConsoleDataDowloader consoleDataDowloader;
         private readonly MinecraftDbContext dbContext;
+        private readonly IRecentActivityEmailSender recentActivityEmailSender;
 
         public List<DbConsoleLog> Logs { get; set; }
 
@@ -24,11 +26,13 @@ namespace MinecraftServerInfoPanel.Pages
 
         public IndexModel(ILogger<IndexModel> logger,
             IConsoleDataDowloader consoleDataDowloader,
-            MinecraftDbContext dbContext)
+            MinecraftDbContext dbContext,
+            IRecentActivityEmailSender recentActivityEmailSender)
         {
             _logger = logger;
             this.consoleDataDowloader = consoleDataDowloader;
             this.dbContext = dbContext;
+            this.recentActivityEmailSender = recentActivityEmailSender;
         }
 
         public void OnGet()
@@ -65,6 +69,8 @@ namespace MinecraftServerInfoPanel.Pages
             }
             else
                 TempData["Message"] = "Nie pobrano żadnych danych z serwera.";
+
+            await recentActivityEmailSender.Send();
 
             return RedirectToPage("Index");
         }
