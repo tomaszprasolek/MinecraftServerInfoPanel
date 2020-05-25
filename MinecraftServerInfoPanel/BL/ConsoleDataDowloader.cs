@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,10 +13,12 @@ namespace MinecraftServerInfoPanel.BL
     {
         HttpClient client = new HttpClient();
 
-        public ConsoleDataDowloader()
+        public ConsoleDataDowloader(IConfiguration configuration)
         {
-            client.BaseAddress = new Uri("");
+            Configuration = configuration;
         }
+
+        public IConfiguration Configuration { get; }
 
         public async Task<List<ConsoleLog>> Download()
         {
@@ -31,7 +34,8 @@ namespace MinecraftServerInfoPanel.BL
 
         private async Task<Dictionary<string, ConsoleLog>> GetConsole(HttpClient client)
         {
-            HttpResponseMessage consoleResponse = await client.GetAsync("");
+            HttpResponseMessage consoleResponse = await client.GetAsync(Configuration["MinecraftServer:ConsoleUrl"]);
+
             var contentType = consoleResponse.Content.Headers.ContentType;
 
             if (contentType.MediaType == "text/html")
@@ -48,11 +52,11 @@ namespace MinecraftServerInfoPanel.BL
             var formContent = new FormUrlEncodedContent(new[]
             {
                  new KeyValuePair<string, string>("akcja", "logowanie"),
-                 new KeyValuePair<string, string>("email", ""),
-                 new KeyValuePair<string, string>("haslo", ""),
+                 new KeyValuePair<string, string>("email", Configuration["MinecraftServer:Email"]),
+                 new KeyValuePair<string, string>("haslo", Configuration["MinecraftServer:Password"]),
             });
 
-            HttpResponseMessage responseMessage = await client.PostAsync("account/signin/", formContent);
+            HttpResponseMessage responseMessage = await client.PostAsync(Configuration["MinecraftServer:LoginUrl"], formContent);
             if (responseMessage.StatusCode == HttpStatusCode.OK)
                 Console.WriteLine("Poprawnie zalogowano do serwera.");
             else
