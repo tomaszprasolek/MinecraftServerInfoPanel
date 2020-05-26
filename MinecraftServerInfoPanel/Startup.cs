@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,11 @@ namespace MinecraftServerInfoPanel
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            // Enable cookie authentication
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie();
+
             services.AddDbContextPool<MinecraftDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("MinecraftDb"));
@@ -47,6 +53,9 @@ namespace MinecraftServerInfoPanel
             }
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
+
             app.UseStaticFiles();
 
             app.UseRouting();
