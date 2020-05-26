@@ -30,12 +30,23 @@ namespace MinecraftServerInfoPanel.BL.EmailSender
 
 			using (var client = new MailKit.Net.Smtp.SmtpClient())
 			{
-				client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-				client.Connect(configuration["EmailConfiguration:SmtpServer"], Convert.ToInt32(configuration["EmailConfiguration:Port"]), false);
-				client.Authenticate(configuration["EmailConfiguration:Username"], configuration["EmailConfiguration:Password"]);
+                try
+                {
+                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                    client.Connect(configuration["EmailConfiguration:SmtpServer"], Convert.ToInt32(configuration["EmailConfiguration:Port"]), false);
+                    client.Authenticate(configuration["EmailConfiguration:Username"], configuration["EmailConfiguration:Password"]);
 
-				await client.SendAsync(message);
-				client.Disconnect(true);
+                    await client.SendAsync(message);
+                }
+                catch
+                {
+                    throw;
+                }
+                finally
+                {
+                    await client.DisconnectAsync(true);
+                    client.Dispose();
+                }
 			}
 		}
 	}
