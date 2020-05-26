@@ -1,4 +1,5 @@
-﻿using MinecraftServerInfoPanel.BL.EmailSender;
+﻿using Microsoft.EntityFrameworkCore;
+using MinecraftServerInfoPanel.BL.EmailSender;
 using MinecraftServerInfoPanel.Database;
 using System.Linq;
 using System.Text;
@@ -50,6 +51,14 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityEmailSender
 
             await emailSender
                 .SendEmailAsync("tomasz.prasolek@gmail.com", "Ostatnia aktywność na serwerze", htmlBody.ToString());
+
+            for (int i = 0; i < logs.Count; i++)
+            {
+                logs[i].SendEmail = true;
+                dbContext.Entry(logs[i]).State = EntityState.Modified;
+            }
+
+            dbContext.SaveChanges();
         }
     }
 }
