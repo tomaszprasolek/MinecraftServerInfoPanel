@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MinecraftServerInfoPanel.BL.EmailSender;
 using MinecraftServerInfoPanel.Database;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,13 +22,24 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityEmailSender
 
         public async Task Send()
         {
-            var logs = dbContext.ConsoleLogs
-                .Where(x => x.IsNeededToSendEmail && x.SendEmail == false)
-                .ToList();
-
+            var logs = GetLogsWhichNeedToSendEmail();
             if (logs.Count == 0)
                 return;
 
+            await SendEmailWithRecentActivity(logs);
+
+            MarkLogsAsSended(logs);
+        }
+
+        private List<DbConsoleLog> GetLogsWhichNeedToSendEmail()
+        {
+            return dbContext.ConsoleLogs
+                .Where(x => x.IsNeededToSendEmail && x.SendEmail == false)
+                .ToList();
+        }
+
+        private async Task SendEmailWithRecentActivity(List<DbConsoleLog> logs)
+        {
             var htmlBody = new StringBuilder(392);
             htmlBody.AppendLine(@"<table class=""table table-striped"">");
             htmlBody.AppendLine(@"    <thead>");
@@ -51,7 +63,10 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityEmailSender
 
             await emailSender
                 .SendEmailAsync("tomasz.prasolek@gmail.com", "Ostatnia aktywność na serwerze", htmlBody.ToString());
+        }
 
+        private void MarkLogsAsSended(List<DbConsoleLog> logs)
+        {
             for (int i = 0; i < logs.Count; i++)
             {
                 logs[i].SendEmail = true;
