@@ -37,6 +37,8 @@ namespace MinecraftServerInfoPanel
             services.AddSingleton<IConsoleDataDowloader, ConsoleDataDowloader>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IRecentActivityEmailSender, RecentActivityEmailSender>();
+
+            services.AddHostedService<CheckConsoleBackgroundService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
