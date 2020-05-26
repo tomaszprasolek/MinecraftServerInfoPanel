@@ -10,6 +10,7 @@ using MinecraftServerInfoPanel.BL.EmailSender;
 using MinecraftServerInfoPanel.BL.RecentActivityChecker;
 using MinecraftServerInfoPanel.BL.RecentActivityEmailSender;
 using MinecraftServerInfoPanel.Database;
+using Serilog;
 
 namespace MinecraftServerInfoPanel
 {
@@ -40,7 +41,7 @@ namespace MinecraftServerInfoPanel
             services.AddScoped<IRecentActivityEmailSender, RecentActivityEmailSender>();
             services.AddScoped<IRecentActivityChecker, RecentActivityChecker>();
 
-            services.AddHostedService<CheckConsoleBackgroundService>();
+            //services.AddHostedService<CheckConsoleBackgroundService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -57,13 +58,12 @@ namespace MinecraftServerInfoPanel
             }
 
             app.UseHttpsRedirection();
-
-            app.UseAuthentication();
-
             app.UseStaticFiles();
 
-            app.UseRouting();
+            app.UseSerilogRequestLogging();
 
+            app.UseAuthentication();
+            app.UseRouting();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

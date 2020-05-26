@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MinecraftServerInfoPanel.BL.RecentActivityChecker;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,7 +24,7 @@ namespace MinecraftServerInfoPanel.BL
         {
             while (stoppingToken.IsCancellationRequested == false)
             {
-                logger.LogInformation($"[{DateTime.Now}] Start background task...");
+                logger.LogInformation($"Start background task...");
                 await DoWork();
                 await Task.Delay(3_600_000, stoppingToken); // 3_600_000 ms == 1h
             }
@@ -33,7 +32,7 @@ namespace MinecraftServerInfoPanel.BL
 
         private async Task DoWork()
         {
-            logger.LogInformation($"[{DateTime.Now}] DoWork method start.");
+            logger.LogInformation($"DoWork method start.");
 
             using (var scope = serviceScopeFactory.CreateScope())
             {
@@ -43,7 +42,7 @@ namespace MinecraftServerInfoPanel.BL
                 await recentActivityChecker.CheckAsync();
             }
 
-            logger.LogInformation($"[{DateTime.Now}] DoWork method end.");
+            logger.LogInformation($"DoWork method end.");
         }
     }
 }
