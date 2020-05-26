@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,11 +11,14 @@ namespace MinecraftServerInfoPanel.BL
 {
     public class ConsoleDataDowloader : IConsoleDataDowloader
     {
+        private readonly ILogger<ConsoleDataDowloader> logger;
         private readonly IConfiguration configuration;
-        HttpClient client = new HttpClient();
 
-        public ConsoleDataDowloader(IConfiguration configuration)
+        private HttpClient client = new HttpClient();
+
+        public ConsoleDataDowloader(ILogger<ConsoleDataDowloader> logger, IConfiguration configuration)
         {
+            this.logger = logger;
             this.configuration = configuration;
         }
 
@@ -57,9 +60,9 @@ namespace MinecraftServerInfoPanel.BL
 
             HttpResponseMessage responseMessage = await client.PostAsync(configuration["MinecraftServer:LoginUrl"], formContent);
             if (responseMessage.StatusCode == HttpStatusCode.OK)
-                Console.WriteLine("Poprawnie zalogowano do serwera.");
+                logger.LogInformation("Poprawnie zalogowano do serwera.");
             else
-                Console.WriteLine("Wystąpił błąd podczas logowania do serwera.");
+                logger.LogInformation("Wystąpił błąd podczas logowania do serwera.");
             return responseMessage.StatusCode;
         }
     }

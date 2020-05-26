@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MinecraftServerInfoPanel.BL;
 using MinecraftServerInfoPanel.BL.EmailSender;
+using MinecraftServerInfoPanel.BL.RecentActivityChecker;
 using MinecraftServerInfoPanel.BL.RecentActivityEmailSender;
 using MinecraftServerInfoPanel.Database;
 
@@ -37,6 +38,7 @@ namespace MinecraftServerInfoPanel
             services.AddSingleton<IConsoleDataDowloader, ConsoleDataDowloader>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IRecentActivityEmailSender, RecentActivityEmailSender>();
+            services.AddScoped<IRecentActivityChecker, RecentActivityChecker>();
 
             services.AddHostedService<CheckConsoleBackgroundService>();
         }
