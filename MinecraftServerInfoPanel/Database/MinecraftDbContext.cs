@@ -11,5 +11,7 @@ namespace MinecraftServerInfoPanel.Database
         }
 
         public DbSet<DbConsoleLog> ConsoleLogs { get; set; }
+
+        public DbSet<Log> Logs { get; set; }
     }
 }
