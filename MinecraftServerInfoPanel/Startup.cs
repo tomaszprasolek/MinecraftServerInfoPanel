@@ -16,9 +16,12 @@ namespace MinecraftServerInfoPanel
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment env;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            this.env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -41,7 +44,8 @@ namespace MinecraftServerInfoPanel
             services.AddScoped<IRecentActivityEmailSender, RecentActivityEmailSender>();
             services.AddScoped<IRecentActivityChecker, RecentActivityChecker>();
 
-            //services.AddHostedService<CheckConsoleBackgroundService>();
+            if (env.IsProduction())
+                services.AddHostedService<CheckConsoleBackgroundService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
