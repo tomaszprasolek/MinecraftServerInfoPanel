@@ -12,10 +12,10 @@
     <table id="logsTable" class="table table-striped table-bordered ">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Level</th>
-                <th>Message</th>
-                <th>Exception</th>
+                <th>Data</th>
+                <th>Poziom</th>
+                <th>Wiadomość</th>
+                @*<th>Wyjątek / błąd</th>*@
             </tr>
         </thead>
         <tbody>
@@ -23,10 +23,10 @@
             @foreach (var log in Model.Logs)
             {
                 <tr>
-                    <td>@log.TimeStamp</td>
+                    <td>@log.Date</td>
                     <td>@log.Level</td>
                     <td>@log.Message</td>
-                    <td>@log.Exception</td>
+                    @*<td>@log.Exception</td>*@
                 </tr>
             }
         </tbody>
@@ -45,7 +45,12 @@
                 "pageLength": 25,
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Polish.json"
-                }
+                },
+                "columns": [
+                    { "width": "16%" },
+                    null,
+                    null
+                ]
             });
         });
     </script>
