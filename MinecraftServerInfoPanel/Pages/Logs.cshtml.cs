@@ -20,8 +20,6 @@ namespace MinecraftServerInfoPanel.Pages
         public void OnGet()
         {
             Logs = dbContext.Logs
-                .OrderByDescending(x => x.TimeStamp)
-                .Take(100)
                 .Select(x => new LogViewModel
                 {
                     Message = x.Message,
