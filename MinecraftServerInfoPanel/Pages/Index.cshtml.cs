@@ -33,6 +33,7 @@ namespace MinecraftServerInfoPanel.Pages
 
         public void OnGet()
         {
+            _logger.LogInformation("Get all saved Minecraft server logs");
             Logs = dbContext.ConsoleLogs.OrderByDescending(x => x.Date).ToList();
         }
 

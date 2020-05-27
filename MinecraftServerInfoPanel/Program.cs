@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Serilog.Events;
 using System;
 
 namespace MinecraftServerInfoPanel
@@ -10,12 +10,13 @@ namespace MinecraftServerInfoPanel
     {
         public static int Main(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                  .AddJsonFile("appsettings.json")
+                  .Build();
+
             Log.Logger = new LoggerConfiguration()
-              .MinimumLevel.Debug()
-              .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-              .Enrich.FromLogContext()
-              .WriteTo.Console()
-              .CreateLogger();
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
 
             try
             {
@@ -36,10 +37,10 @@ namespace MinecraftServerInfoPanel
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                })
-                .UseSerilog();
+                });
     }
 }
