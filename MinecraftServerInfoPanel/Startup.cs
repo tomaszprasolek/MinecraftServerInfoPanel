@@ -1,16 +1,20 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MimeKit.Encodings;
 using MinecraftServerInfoPanel.BL;
 using MinecraftServerInfoPanel.BL.EmailSender;
 using MinecraftServerInfoPanel.BL.RecentActivityChecker;
 using MinecraftServerInfoPanel.BL.RecentActivityEmailSender;
 using MinecraftServerInfoPanel.Database;
 using Serilog;
+using System;
+using System.IO;
 
 namespace MinecraftServerInfoPanel
 {
@@ -73,7 +77,28 @@ namespace MinecraftServerInfoPanel
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+
+                endpoints.MapGet("/logsFile", async context =>
+                {
+                    await context.Response.WriteAsync(GetLogFileContent());
+                });
             });
+        }
+
+        private string GetLogFileContent()
+        {
+            // log20200528.txt
+            string filePath = env.WebRootFileProvider.GetFileInfo($"log{DateTime.Now:yyyyMMdd}.txt")?.PhysicalPath;
+            if (File.Exists(filePath) == false)
+                return $"File {filePath} not exists.";
+
+            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                using (var streamReader = new StreamReader(stream))
+                {
+                    return streamReader.ReadToEnd();
+                }
+            }
         }
     }
 }

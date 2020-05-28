@@ -1,0 +1,345 @@
+2020-05-28 07:38:47.436 +02:00 [INF] Starting web host
+2020-05-28 07:38:48.889 +02:00 [INF] User profile is available. Using 'C:\Users\Tomasz\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-05-28 07:38:49.262 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-05-28 07:38:49.263 +02:00 [INF] Hosting environment: Development
+2020-05-28 07:38:49.264 +02:00 [INF] Content root path: D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel
+2020-05-28 07:38:49.363 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/  
+2020-05-28 07:38:49.542 +02:00 [INF] Authorization was successful.
+2020-05-28 07:38:49.543 +02:00 [INF] Executing endpoint '/Index'
+2020-05-28 07:38:49.622 +02:00 [INF] Route matched with {page = "/Index"}. Executing page /Index
+2020-05-28 07:38:49.851 +02:00 [INF] Executing handler method MinecraftServerInfoPanel.Pages.IndexModel.OnGet - ModelState is "Valid"
+2020-05-28 07:38:49.870 +02:00 [INF] Get all saved Minecraft server logs
+2020-05-28 07:38:50.761 +02:00 [INF] Entity Framework Core 3.1.3 initialized 'MinecraftDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: MaxPoolSize=128 
+2020-05-28 07:38:51.397 +02:00 [INF] Executed DbCommand (45ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Date], [c].[Information], [c].[IsNeededToSendEmail], [c].[SendEmail]
+FROM [ConsoleLogs] AS [c]
+ORDER BY [c].[Date] DESC
+2020-05-28 07:38:51.541 +02:00 [INF] Executed handler method OnGet, returned result .
+2020-05-28 07:38:51.548 +02:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2020-05-28 07:38:51.548 +02:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2020-05-28 07:38:51.758 +02:00 [INF] Executed page /Index in 2122.2455ms
+2020-05-28 07:38:51.760 +02:00 [INF] Executed endpoint '/Index'
+2020-05-28 07:38:51.767 +02:00 [INF] HTTP GET / responded 200 in 2383.8151 ms
+2020-05-28 07:38:51.818 +02:00 [INF] Request finished in 2464.2709ms 200 text/html; charset=utf-8
+2020-05-28 07:38:54.322 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/  
+2020-05-28 07:38:54.332 +02:00 [INF] Authorization was successful.
+2020-05-28 07:38:54.333 +02:00 [INF] Executing endpoint '/Index'
+2020-05-28 07:38:54.335 +02:00 [INF] Route matched with {page = "/Index"}. Executing page /Index
+2020-05-28 07:38:54.339 +02:00 [INF] Executing handler method MinecraftServerInfoPanel.Pages.IndexModel.OnGet - ModelState is "Valid"
+2020-05-28 07:38:54.339 +02:00 [INF] Get all saved Minecraft server logs
+2020-05-28 07:38:54.351 +02:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Date], [c].[Information], [c].[IsNeededToSendEmail], [c].[SendEmail]
+FROM [ConsoleLogs] AS [c]
+ORDER BY [c].[Date] DESC
+2020-05-28 07:38:54.353 +02:00 [INF] Executed handler method OnGet, returned result .
+2020-05-28 07:38:54.353 +02:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2020-05-28 07:38:54.354 +02:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2020-05-28 07:38:54.365 +02:00 [INF] Executed page /Index in 25.8705ms
+2020-05-28 07:38:54.369 +02:00 [INF] Executed endpoint '/Index'
+2020-05-28 07:38:54.369 +02:00 [INF] HTTP GET / responded 200 in 45.3104 ms
+2020-05-28 07:38:54.370 +02:00 [INF] Request finished in 49.3391ms 200 text/html; charset=utf-8
+2020-05-28 07:38:57.740 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/logsFile  
+2020-05-28 07:38:57.755 +02:00 [INF] Executing endpoint '/logsFile HTTP: GET'
+2020-05-28 07:38:57.851 +02:00 [INF] Executed endpoint '/logsFile HTTP: GET'
+2020-05-28 07:38:57.852 +02:00 [ERR] HTTP GET /logsFile responded 500 in 109.8647 ms
+System.IO.IOException: The process cannot access the file 'D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\wwwroot\log20200528.txt' because it is being used by another process.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks)
+   at System.IO.File.InternalReadAllText(String path, Encoding encoding)
+   at System.IO.File.ReadAllText(String path)
+   at MinecraftServerInfoPanel.Startup.GetLogFileContent() in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 98
+   at MinecraftServerInfoPanel.Startup.<Configure>b__6_1(HttpContext context) in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 83
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2020-05-28 07:38:57.940 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+System.IO.IOException: The process cannot access the file 'D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\wwwroot\log20200528.txt' because it is being used by another process.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks)
+   at System.IO.File.InternalReadAllText(String path, Encoding encoding)
+   at System.IO.File.ReadAllText(String path)
+   at MinecraftServerInfoPanel.Startup.GetLogFileContent() in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 98
+   at MinecraftServerInfoPanel.Startup.<Configure>b__6_1(HttpContext context) in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 83
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-05-28 07:38:58.008 +02:00 [INF] Request finished in 267.6509ms 500 text/html; charset=utf-8
+2020-05-28 07:40:26.676 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/logsFile  
+2020-05-28 07:40:26.686 +02:00 [INF] Executing endpoint '/logsFile HTTP: GET'
+2020-05-28 07:40:26.733 +02:00 [INF] Executed endpoint '/logsFile HTTP: GET'
+2020-05-28 07:40:26.734 +02:00 [ERR] HTTP GET /logsFile responded 500 in 55.0472 ms
+System.IO.IOException: The process cannot access the file 'D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\wwwroot\log20200528.txt' because it is being used by another process.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks)
+   at System.IO.File.InternalReadAllText(String path, Encoding encoding)
+   at System.IO.File.ReadAllText(String path)
+   at MinecraftServerInfoPanel.Startup.GetLogFileContent() in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 98
+   at MinecraftServerInfoPanel.Startup.<Configure>b__6_1(HttpContext context) in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 83
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2020-05-28 07:40:26.738 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+System.IO.IOException: The process cannot access the file 'D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\wwwroot\log20200528.txt' because it is being used by another process.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks)
+   at System.IO.File.InternalReadAllText(String path, Encoding encoding)
+   at System.IO.File.ReadAllText(String path)
+   at MinecraftServerInfoPanel.Startup.GetLogFileContent() in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 98
+   at MinecraftServerInfoPanel.Startup.<Configure>b__6_1(HttpContext context) in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 83
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-05-28 07:40:26.754 +02:00 [INF] Request finished in 79.0579ms 500 text/html; charset=utf-8
+2020-05-28 07:40:27.114 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/favicon.ico  
+2020-05-28 07:40:27.137 +02:00 [INF] Sending file. Request path: '/favicon.ico'. Physical path: 'D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\wwwroot\favicon.ico'
+2020-05-28 07:40:27.138 +02:00 [INF] Request finished in 24.9588ms 200 image/x-icon
+2020-05-28 07:41:03.767 +02:00 [INF] Starting web host
+2020-05-28 07:41:04.828 +02:00 [INF] User profile is available. Using 'C:\Users\Tomasz\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-05-28 07:41:05.156 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-05-28 07:41:05.156 +02:00 [INF] Hosting environment: Development
+2020-05-28 07:41:05.156 +02:00 [INF] Content root path: D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel
+2020-05-28 07:41:05.226 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/  
+2020-05-28 07:41:05.363 +02:00 [INF] Authorization was successful.
+2020-05-28 07:41:05.364 +02:00 [INF] Executing endpoint '/Index'
+2020-05-28 07:41:05.441 +02:00 [INF] Route matched with {page = "/Index"}. Executing page /Index
+2020-05-28 07:41:05.690 +02:00 [INF] Executing handler method MinecraftServerInfoPanel.Pages.IndexModel.OnGet - ModelState is "Valid"
+2020-05-28 07:41:05.707 +02:00 [INF] Get all saved Minecraft server logs
+2020-05-28 07:41:06.531 +02:00 [INF] Entity Framework Core 3.1.3 initialized 'MinecraftDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: MaxPoolSize=128 
+2020-05-28 07:41:07.171 +02:00 [INF] Executed DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Date], [c].[Information], [c].[IsNeededToSendEmail], [c].[SendEmail]
+FROM [ConsoleLogs] AS [c]
+ORDER BY [c].[Date] DESC
+2020-05-28 07:41:07.301 +02:00 [INF] Executed handler method OnGet, returned result .
+2020-05-28 07:41:07.307 +02:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2020-05-28 07:41:07.308 +02:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2020-05-28 07:41:07.524 +02:00 [INF] Executed page /Index in 2073.4764ms
+2020-05-28 07:41:07.526 +02:00 [INF] Executed endpoint '/Index'
+2020-05-28 07:41:07.532 +02:00 [INF] HTTP GET / responded 200 in 2293.4877 ms
+2020-05-28 07:41:07.553 +02:00 [INF] Request finished in 2331.6664ms 200 text/html; charset=utf-8
+2020-05-28 07:41:11.018 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/logsFile  
+2020-05-28 07:41:11.036 +02:00 [INF] Executing endpoint '/logsFile HTTP: GET'
+2020-05-28 07:41:14.807 +02:00 [INF] Executed endpoint '/logsFile HTTP: GET'
+2020-05-28 07:41:14.808 +02:00 [ERR] HTTP GET /logsFile responded 500 in 3784.0539 ms
+System.IO.IOException: The process cannot access the file 'D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\wwwroot\log20200528.txt' because it is being used by another process.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks)
+   at System.IO.File.InternalReadAllText(String path, Encoding encoding)
+   at System.IO.File.ReadAllText(String path)
+   at MinecraftServerInfoPanel.Startup.GetLogFileContent() in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 98
+   at MinecraftServerInfoPanel.Startup.<Configure>b__6_1(HttpContext context) in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 83
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2020-05-28 07:41:14.862 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+System.IO.IOException: The process cannot access the file 'D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\wwwroot\log20200528.txt' because it is being used by another process.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks)
+   at System.IO.File.InternalReadAllText(String path, Encoding encoding)
+   at System.IO.File.ReadAllText(String path)
+   at MinecraftServerInfoPanel.Startup.GetLogFileContent() in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 98
+   at MinecraftServerInfoPanel.Startup.<Configure>b__6_1(HttpContext context) in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 83
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-05-28 07:41:14.914 +02:00 [INF] Request finished in 3896.2885ms 500 text/html; charset=utf-8
+2020-05-28 07:41:22.574 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/logsFile  
+2020-05-28 07:41:22.589 +02:00 [INF] Executing endpoint '/logsFile HTTP: GET'
+2020-05-28 07:43:14.423 +02:00 [INF] Starting web host
+2020-05-28 07:43:14.723 +02:00 [INF] User profile is available. Using 'C:\Users\Tomasz\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-05-28 07:43:14.863 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-05-28 07:43:14.863 +02:00 [INF] Hosting environment: Development
+2020-05-28 07:43:14.864 +02:00 [INF] Content root path: D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel
+2020-05-28 07:43:14.895 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/  
+2020-05-28 07:43:15.006 +02:00 [INF] Authorization was successful.
+2020-05-28 07:43:15.007 +02:00 [INF] Executing endpoint '/Index'
+2020-05-28 07:43:15.067 +02:00 [INF] Route matched with {page = "/Index"}. Executing page /Index
+2020-05-28 07:43:15.235 +02:00 [INF] Executing handler method MinecraftServerInfoPanel.Pages.IndexModel.OnGet - ModelState is "Valid"
+2020-05-28 07:43:15.242 +02:00 [INF] Get all saved Minecraft server logs
+2020-05-28 07:43:15.893 +02:00 [INF] Entity Framework Core 3.1.3 initialized 'MinecraftDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: MaxPoolSize=128 
+2020-05-28 07:43:16.454 +02:00 [INF] Executed DbCommand (41ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Date], [c].[Information], [c].[IsNeededToSendEmail], [c].[SendEmail]
+FROM [ConsoleLogs] AS [c]
+ORDER BY [c].[Date] DESC
+2020-05-28 07:43:16.573 +02:00 [INF] Executed handler method OnGet, returned result .
+2020-05-28 07:43:16.580 +02:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2020-05-28 07:43:16.581 +02:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2020-05-28 07:43:16.725 +02:00 [INF] Executed page /Index in 1649.3201ms
+2020-05-28 07:43:16.727 +02:00 [INF] Executed endpoint '/Index'
+2020-05-28 07:43:16.731 +02:00 [INF] HTTP GET / responded 200 in 1825.7927 ms
+2020-05-28 07:43:16.748 +02:00 [INF] Request finished in 1857.7232ms 200 text/html; charset=utf-8
+2020-05-28 07:43:22.021 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/Logs  
+2020-05-28 07:43:22.036 +02:00 [INF] Executing endpoint '/Logs'
+2020-05-28 07:43:22.042 +02:00 [INF] Route matched with {page = "/Logs"}. Executing page /Logs
+2020-05-28 07:43:22.046 +02:00 [INF] Executing handler method MinecraftServerInfoPanel.Pages.LogsModel.OnGet - ModelState is "Valid"
+2020-05-28 07:43:22.083 +02:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[Message], [l].[Level], [l].[TimeStamp], [l].[Exception]
+FROM [Log] AS [l]
+2020-05-28 07:43:22.089 +02:00 [INF] Executed handler method OnGet, returned result .
+2020-05-28 07:43:22.089 +02:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2020-05-28 07:43:22.089 +02:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2020-05-28 07:43:22.104 +02:00 [INF] Executed page /Logs in 62.1963ms
+2020-05-28 07:43:22.105 +02:00 [INF] Executed endpoint '/Logs'
+2020-05-28 07:43:22.105 +02:00 [INF] HTTP GET /Logs responded 200 in 81.2718 ms
+2020-05-28 07:43:22.106 +02:00 [INF] Request finished in 85.1607ms 200 text/html; charset=utf-8
+2020-05-28 07:43:30.759 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/logsFile  
+2020-05-28 07:43:30.768 +02:00 [INF] Executing endpoint '/logsFile HTTP: GET'
+2020-05-28 07:43:30.772 +02:00 [INF] Executed endpoint '/logsFile HTTP: GET'
+2020-05-28 07:43:30.773 +02:00 [ERR] HTTP GET /logsFile responded 500 in 11.2930 ms
+System.IO.IOException: The process cannot access the file 'D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\wwwroot\log20200528.txt' because it is being used by another process.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks)
+   at System.IO.File.InternalReadAllText(String path, Encoding encoding)
+   at System.IO.File.ReadAllText(String path)
+   at MinecraftServerInfoPanel.Startup.GetLogFileContent() in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 98
+   at MinecraftServerInfoPanel.Startup.<Configure>b__6_1(HttpContext context) in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 83
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2020-05-28 07:43:30.807 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+System.IO.IOException: The process cannot access the file 'D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\wwwroot\log20200528.txt' because it is being used by another process.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks)
+   at System.IO.File.InternalReadAllText(String path, Encoding encoding)
+   at System.IO.File.ReadAllText(String path)
+   at MinecraftServerInfoPanel.Startup.GetLogFileContent() in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 98
+   at MinecraftServerInfoPanel.Startup.<Configure>b__6_1(HttpContext context) in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 83
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-05-28 07:43:30.858 +02:00 [INF] Request finished in 100.6457ms 500 text/html; charset=utf-8
+2020-05-28 07:47:04.591 +02:00 [INF] Starting web host
+2020-05-28 07:47:05.729 +02:00 [INF] User profile is available. Using 'C:\Users\Tomasz\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-05-28 07:47:06.075 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-05-28 07:47:06.076 +02:00 [INF] Hosting environment: Development
+2020-05-28 07:47:06.076 +02:00 [INF] Content root path: D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel
+2020-05-28 07:47:06.160 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/  
+2020-05-28 07:47:06.296 +02:00 [INF] Authorization was successful.
+2020-05-28 07:47:06.297 +02:00 [INF] Executing endpoint '/Index'
+2020-05-28 07:47:06.401 +02:00 [INF] Route matched with {page = "/Index"}. Executing page /Index
+2020-05-28 07:47:06.660 +02:00 [INF] Executing handler method MinecraftServerInfoPanel.Pages.IndexModel.OnGet - ModelState is "Valid"
+2020-05-28 07:47:06.679 +02:00 [INF] Get all saved Minecraft server logs
+2020-05-28 07:47:07.530 +02:00 [INF] Entity Framework Core 3.1.3 initialized 'MinecraftDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: MaxPoolSize=128 
+2020-05-28 07:47:08.188 +02:00 [INF] Executed DbCommand (49ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Date], [c].[Information], [c].[IsNeededToSendEmail], [c].[SendEmail]
+FROM [ConsoleLogs] AS [c]
+ORDER BY [c].[Date] DESC
+2020-05-28 07:47:08.328 +02:00 [INF] Executed handler method OnGet, returned result .
+2020-05-28 07:47:08.334 +02:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2020-05-28 07:47:08.334 +02:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2020-05-28 07:47:08.525 +02:00 [INF] Executed page /Index in 2115.7433ms
+2020-05-28 07:47:08.528 +02:00 [INF] Executed endpoint '/Index'
+2020-05-28 07:47:08.532 +02:00 [INF] HTTP GET / responded 200 in 2360.1280 ms
+2020-05-28 07:47:08.554 +02:00 [INF] Request finished in 2394.8035ms 200 text/html; charset=utf-8
+2020-05-28 07:47:10.155 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/Logs  
+2020-05-28 07:47:10.172 +02:00 [INF] Executing endpoint '/Logs'
+2020-05-28 07:47:10.181 +02:00 [INF] Route matched with {page = "/Logs"}. Executing page /Logs
+2020-05-28 07:47:10.184 +02:00 [INF] Executing handler method MinecraftServerInfoPanel.Pages.LogsModel.OnGet - ModelState is "Valid"
+2020-05-28 07:47:10.226 +02:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[Message], [l].[Level], [l].[TimeStamp], [l].[Exception]
+FROM [Log] AS [l]
+2020-05-28 07:47:10.233 +02:00 [INF] Executed handler method OnGet, returned result .
+2020-05-28 07:47:10.233 +02:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2020-05-28 07:47:10.233 +02:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2020-05-28 07:47:10.250 +02:00 [INF] Executed page /Logs in 68.5244ms
+2020-05-28 07:47:10.250 +02:00 [INF] Executed endpoint '/Logs'
+2020-05-28 07:47:10.250 +02:00 [INF] HTTP GET /Logs responded 200 in 92.3822 ms
+2020-05-28 07:47:10.251 +02:00 [INF] Request finished in 96.788ms 200 text/html; charset=utf-8
+2020-05-28 07:47:16.854 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/logsFile  
+2020-05-28 07:47:16.878 +02:00 [INF] Executing endpoint '/logsFile HTTP: GET'
+2020-05-28 07:47:16.980 +02:00 [INF] Executed endpoint '/logsFile HTTP: GET'
+2020-05-28 07:47:16.981 +02:00 [ERR] HTTP GET /logsFile responded 500 in 116.7393 ms
+System.IO.IOException: The process cannot access the file 'D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\wwwroot\log20200528.txt' because it is being used by another process.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks)
+   at System.IO.File.InternalReadAllText(String path, Encoding encoding)
+   at System.IO.File.ReadAllText(String path)
+   at MinecraftServerInfoPanel.Startup.GetLogFileContent() in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 98
+   at MinecraftServerInfoPanel.Startup.<Configure>b__6_1(HttpContext context) in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 83
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2020-05-28 07:47:17.038 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+System.IO.IOException: The process cannot access the file 'D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\wwwroot\log20200528.txt' because it is being used by another process.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks)
+   at System.IO.File.InternalReadAllText(String path, Encoding encoding)
+   at System.IO.File.ReadAllText(String path)
+   at MinecraftServerInfoPanel.Startup.GetLogFileContent() in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 98
+   at MinecraftServerInfoPanel.Startup.<Configure>b__6_1(HttpContext context) in D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel\Startup.cs:line 83
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-05-28 07:47:17.093 +02:00 [INF] Request finished in 239.1905ms 500 text/html; charset=utf-8
+2020-05-28 07:53:44.833 +02:00 [INF] Starting web host
+2020-05-28 07:53:46.045 +02:00 [INF] User profile is available. Using 'C:\Users\Tomasz\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-05-28 07:53:46.398 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-05-28 07:53:46.398 +02:00 [INF] Hosting environment: Development
+2020-05-28 07:53:46.399 +02:00 [INF] Content root path: D:\Tomek\_PROJEKTY\MinecraftServerInfoPanel\MinecraftServerInfoPanel
+2020-05-28 07:53:46.477 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/  
+2020-05-28 07:53:46.619 +02:00 [INF] Authorization was successful.
+2020-05-28 07:53:46.620 +02:00 [INF] Executing endpoint '/Index'
+2020-05-28 07:53:46.695 +02:00 [INF] Route matched with {page = "/Index"}. Executing page /Index
+2020-05-28 07:53:46.947 +02:00 [INF] Executing handler method MinecraftServerInfoPanel.Pages.IndexModel.OnGet - ModelState is "Valid"
+2020-05-28 07:53:46.972 +02:00 [INF] Get all saved Minecraft server logs
+2020-05-28 07:53:47.825 +02:00 [INF] Entity Framework Core 3.1.3 initialized 'MinecraftDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: MaxPoolSize=128 
+2020-05-28 07:53:48.512 +02:00 [INF] Executed DbCommand (51ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Date], [c].[Information], [c].[IsNeededToSendEmail], [c].[SendEmail]
+FROM [ConsoleLogs] AS [c]
+ORDER BY [c].[Date] DESC
+2020-05-28 07:53:48.643 +02:00 [INF] Executed handler method OnGet, returned result .
+2020-05-28 07:53:48.650 +02:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2020-05-28 07:53:48.651 +02:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2020-05-28 07:53:48.863 +02:00 [INF] Executed page /Index in 2159.3829ms
+2020-05-28 07:53:48.866 +02:00 [INF] Executed endpoint '/Index'
+2020-05-28 07:53:48.872 +02:00 [INF] HTTP GET / responded 200 in 2380.1999 ms
+2020-05-28 07:53:48.926 +02:00 [INF] Request finished in 2454.9233ms 200 text/html; charset=utf-8
+2020-05-28 07:53:51.551 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:44325/logsFile  
+2020-05-28 07:53:51.567 +02:00 [INF] Executing endpoint '/logsFile HTTP: GET'
+2020-05-28 07:53:51.599 +02:00 [INF] Executed endpoint '/logsFile HTTP: GET'
+2020-05-28 07:53:51.600 +02:00 [INF] HTTP GET /logsFile responded 200 in 43.7499 ms
+2020-05-28 07:53:51.605 +02:00 [INF] Request finished in 54.723ms 200 
