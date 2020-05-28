@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using MinecraftServerInfoPanel.Database;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 
 namespace MinecraftServerInfoPanel.Pages
 {
+    [Authorize]
     public class LogsModel : PageModel
     {
         private readonly MinecraftDbContext dbContext;
