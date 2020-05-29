@@ -30,7 +30,7 @@ jobs:
       with:
         files: './publish/appsettings.json'
       env:
-        AllowedHosts: "GHActions"
+        Args.connectionString: "GHActions"
     - name: Create artifacts
       uses: actions/upload-artifact@v2
       with:
