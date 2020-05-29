@@ -28,7 +28,7 @@ jobs:
     - name: Variable Substitution
       uses: microsoft/variable-substitution@v1 
       with:
-        files: 'appsettings.json'
+        files: './MinecraftServerInfoPanel/appsettings.json'
       env:
         AllowedHosts: "GHActions"
     - name: Create artifacts
