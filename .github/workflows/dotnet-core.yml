@@ -25,13 +25,13 @@ jobs:
       run: dotnet test --no-restore --verbosity normal
     - name: Publish
       run: dotnet publish ./MinecraftServerInfoPanel/MinecraftServerInfoPanel.csproj -c Release -o ./publish
-    - name: Create artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        path: ./publish
     - name: Variable Substitution
       uses: microsoft/variable-substitution@v1 
       with:
         files: 'appsettings.json'
       env:
         AllowedHosts: "GHActions"
+    - name: Create artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        path: ./publish
