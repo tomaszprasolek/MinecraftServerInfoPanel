@@ -24,9 +24,12 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     - name: Publish
-      run: dotnet publish ./MinecraftServerInfoPanel/MinecraftServerInfoPanel.csproj -c Release -o ./publish
-    - name: Create artifacts
-      uses: actions/upload-artifact@v2
+      run: dotnet publish ./MinecraftServerInfoPanel/MinecraftServerInfoPanel.csproj -c Release -o ./wwwroot
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@3.1.0
       with:
-        name: MinecrafServerInfoPanel
-        path: ./publish
+        ftp-server: ftp://194.88.154.189/minecraft.mojenawyki.hostingasp.pl/
+        ftp-username: ${{ secrets.FTP_USERNAME }}
+        ftp-password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./wwwroot
+        git-ftp-args: --all
