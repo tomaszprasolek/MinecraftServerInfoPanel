@@ -40,4 +40,4 @@ steps:
     rootDirectory: './publish'
     remoteDirectory: './wwwroot'
     preservePaths: true
-    customCmds: 'dele ./wwwroot/app_offline.htm'
+    customCmds: 'dele ./app_offline.htm'
