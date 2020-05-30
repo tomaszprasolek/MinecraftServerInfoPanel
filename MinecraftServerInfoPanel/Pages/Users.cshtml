@@ -4,9 +4,22 @@
     ViewData["Title"] = "Użytkownicy";
 }
 
-<p>Czas spędzony na graniu na serwerze (hh/mm/ss).</p>
-
-@foreach (var user in Model.Users)
-{
-    <p>Użytkownik <b>@user.Name</b> grał @user.PlayTimeFriendly</p>
-}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Użytkownik</th>
+            <th scope="col">Ostatni raz grał na serwerze</th>
+            <th scope="col">Całkowity czas gry [hh/mm/ss]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+        <tr>
+            <td>@user.Name</td>
+            <td>@user.LastTimeOnServer</td>
+            <td>@user.PlayTimeFriendly</td>
+        </tr>
+        }
+    </tbody>
+</table>

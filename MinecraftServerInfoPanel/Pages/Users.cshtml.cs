@@ -12,7 +12,7 @@ namespace MinecraftServerInfoPanel.Pages
     {
         private readonly MinecraftDbContext dbContext;
 
-        public List<User> Users { get; set; }
+        public List<ServerUserViewModel> Users { get; set; }
 
         public UsersModel(MinecraftDbContext dbContext)
         {
@@ -23,12 +23,26 @@ namespace MinecraftServerInfoPanel.Pages
         {
             List<string> users = dbContext.ServerUsers.Select(x => x.UserName).ToList();
 
-            Users = new List<User>(users.Count);
+            Users = new List<ServerUserViewModel>(users.Count);
 
             for (int i = 0; i < users.Count; i++)
             {
-                Users.Add(new User { Name = users[i], PlayTime = CountUserPlayTime(users[i]) });
+                Users.Add(new ServerUserViewModel
+                {
+                    Name = users[i],
+                    PlayTime = CountUserPlayTime(users[i]),
+                    LastTimeOnServer = GetLastTimeOnServer(users[i])
+                });
             }
+        }
+
+        private DateTime GetLastTimeOnServer(string userName)
+        {
+            return dbContext.ConsoleLogs
+                .Where(x => x.Information.Contains(userName))
+                .Where(x => x.Information.Contains("connected") &&
+                         x.Information.Contains("disconnected") == false)
+                .Max(x => x.Date);
         }
 
         private TimeSpan CountUserPlayTime(string userName)
@@ -64,11 +78,13 @@ namespace MinecraftServerInfoPanel.Pages
         }
     }
 
-    public class User
+    public class ServerUserViewModel
     {
         public string Name { get; set; }
         public TimeSpan PlayTime { get; set; }
 
         public string PlayTimeFriendly => PlayTime.ToString(@"hh\:mm\:ss");
+
+        public DateTime LastTimeOnServer { get; set; }
     }
 }
