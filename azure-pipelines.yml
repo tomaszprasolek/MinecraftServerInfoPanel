@@ -27,7 +27,7 @@ steps:
     username: '$(FTP_USERNAME )'
     password: '$(FTP_PASSWORD)'
     rootDirectory: '/'
-    filePatterns: 'app_offline.htm'
+    filePatterns: '**/app_offline.htm'
     remoteDirectory: './wwwroot'
     preservePaths: true
 
