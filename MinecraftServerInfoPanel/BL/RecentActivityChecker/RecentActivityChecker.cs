@@ -38,14 +38,7 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityChecker
             else
                 maxDateInDb = dbContext.ConsoleLogs.Max(x => x.Date);
 
-            var dbEntities = result
-                .Where(r => r.text.Contains("Running AutoCompaction...") == false)
-                .Select(r => new DbConsoleLog
-                {
-                    Date = Convert.ToDateTime(r.text.Substring(1, 19)),
-                    Information = r.text[26..].Trim(),
-                    IsNeededToSendEmail = IsNeededToSendEmail(r.text)
-                })
+            var dbEntities = ConvertToDbConsoleLog(result)
                 .Where(r => r.Date > maxDateInDb)
                 .ToList();
 
@@ -53,18 +46,35 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityChecker
 
             if (dbEntities.Count > 0)
             {
-                foreach (var entity in dbEntities)
-                {
-                    dbContext.Entry(entity).State = EntityState.Added;
-                    dbContext.ConsoleLogs.Add(entity);
-                }
-                dbContext.SaveChanges();
+                AddServerLogsToDb(dbEntities);
                 newActivitiesOnServer = true;
             }
 
             await recentActivityEmailSender.Send();
 
             return newActivitiesOnServer;
+        }
+
+        private IEnumerable<DbConsoleLog> ConvertToDbConsoleLog(List<ConsoleLog> list)
+        {
+            return list
+                .Where(r => r.text.Contains("Running AutoCompaction...") == false)
+                .Select(r => new DbConsoleLog
+                {
+                    Date = Convert.ToDateTime(r.text.Substring(1, 19)),
+                    Information = r.text[26..].Trim(),
+                    IsNeededToSendEmail = IsNeededToSendEmail(r.text)
+                });
+        }
+
+        private void AddServerLogsToDb(List<DbConsoleLog> serverlogs)
+        {
+            foreach (var entity in serverlogs)
+            {
+                dbContext.Entry(entity).State = EntityState.Added;
+                dbContext.ConsoleLogs.Add(entity);
+            }
+            dbContext.SaveChanges();
         }
 
         private bool IsNeededToSendEmail(string text) => text.Contains("connected");
