@@ -41,4 +41,4 @@ steps:
     remoteDirectory: './wwwroot'
     filePatterns: "**/MailKit.dll"
     preservePaths: true
-    customCmds: RNFR aaaa.txt \n RNTO bbbb.txt
+    customCmds: RNFR aaaa.txt | RNTO bbbb.txt
