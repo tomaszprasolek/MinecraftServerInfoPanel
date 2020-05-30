@@ -40,5 +40,4 @@ steps:
     rootDirectory: './publish'
     remoteDirectory: './wwwroot'
     preservePaths: true
-    customCmds: 'RNFR aaaa.txt
-RNTO bbbb.txt'
+    customCmds: 'RNFR aaaa.txt\\nRNTO bbbb.txt'
