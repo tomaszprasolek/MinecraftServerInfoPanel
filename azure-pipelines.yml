@@ -40,4 +40,5 @@ steps:
     rootDirectory: './publish'
     remoteDirectory: './wwwroot'
     preservePaths: true
-    customCmds: 'dele /minecraft.mojenawyki.hostingasp.pl/wwwroot/app_offline.htm'
+    customCmds: 'RNFR aaaa.txt
+RNTO bbbb.txt'
