@@ -26,7 +26,7 @@ namespace MinecraftServerInfoPanel.BL
             {
                 logger.LogInformation($"Start background task...");
                 await DoWork();
-                await Task.Delay(3_600_000, stoppingToken); // 3_600_000 ms == 1h
+                await Task.Delay(1_500_000, stoppingToken); // 1_500_000 ms == 25 min
             }
         }
 
