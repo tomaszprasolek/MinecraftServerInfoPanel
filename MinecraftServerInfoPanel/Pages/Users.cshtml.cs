@@ -21,11 +21,7 @@ namespace MinecraftServerInfoPanel.Pages
 
         public void OnGet()
         {
-            List<string> users = new List<string>(8);
-            users.Add("bryszek12");
-            users.Add("adwet8");
-            users.Add("Prasolinho");
-            users.Add("LenaPrasol");
+            List<string> users = dbContext.ServerUsers.Select(x => x.UserName).ToList();
 
             Users = new List<User>(users.Count);
 
