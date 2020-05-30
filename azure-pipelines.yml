@@ -42,5 +42,5 @@ steps:
     filePatterns: "**/MailKit.dll"
     preservePaths: true
     customCmds: |
-      RNFR aaaa.txt
-      RNTO bbbb.txt
+      RNFR /minecraft.mojenawyki.hostingasp.pl/wwwroot/aaaa.txt
+      RNTO /minecraft.mojenawyki.hostingasp.pl/wwwroot/bbbb.txt
