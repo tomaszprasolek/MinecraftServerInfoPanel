@@ -32,7 +32,11 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityChecker
         {
             List<ConsoleLog> result = await consoleDataDowloader.Download();
 
-            var maxDateInDb = dbContext.ConsoleLogs.Max(x => x.Date);
+            DateTime maxDateInDb;
+            if (dbContext.ConsoleLogs.Count() == 0)
+                maxDateInDb = DateTime.MinValue;
+            else
+                maxDateInDb = dbContext.ConsoleLogs.Max(x => x.Date);
 
             var dbEntities = result
                 .Where(r => r.text.Contains("Running AutoCompaction...") == false)
