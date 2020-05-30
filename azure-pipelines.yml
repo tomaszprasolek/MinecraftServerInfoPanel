@@ -20,24 +20,24 @@ steps:
 - script: dotnet publish ./MinecraftServerInfoPanel/MinecraftServerInfoPanel.csproj -c Release -o ./publish
   displayName: Publish
 
-- task: FtpUpload@2
-  inputs:
-    credentialsOption: 'inputs'
-    serverUrl: 'ftp://194.88.154.189/minecraft.mojenawyki.hostingasp.pl/'
-    username: '$(FTP_USERNAME )'
-    password: '$(FTP_PASSWORD)'
-    rootDirectory: '/'
-    filePatterns: '**/app_offline.htm'
-    remoteDirectory: './wwwroot'
-    preservePaths: true
-
 # - task: FtpUpload@2
 #   inputs:
 #     credentialsOption: 'inputs'
 #     serverUrl: 'ftp://194.88.154.189/minecraft.mojenawyki.hostingasp.pl/'
-#     username: '$(FTP_USERNAME)'
+#     username: '$(FTP_USERNAME )'
 #     password: '$(FTP_PASSWORD)'
-#     rootDirectory: './publish'
+#     rootDirectory: '/'
+#     filePatterns: '**/app_offline.htm'
 #     remoteDirectory: './wwwroot'
 #     preservePaths: true
-#     customCmds: 'delete app_offline.htm'
+
+- task: FtpUpload@2
+  inputs:
+    credentialsOption: 'inputs'
+    serverUrl: 'ftp://194.88.154.189/minecraft.mojenawyki.hostingasp.pl/'
+    username: '$(FTP_USERNAME)'
+    password: '$(FTP_PASSWORD)'
+    rootDirectory: './publish'
+    remoteDirectory: './wwwroot'
+    preservePaths: true
+    customCmds: 'delete app_offline.htm'
