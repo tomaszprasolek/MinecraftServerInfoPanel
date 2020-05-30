@@ -40,4 +40,4 @@ steps:
     rootDirectory: './publish'
     remoteDirectory: './wwwroot'
     preservePaths: true
-    customCmds: 'dele app_offline.htm'
+    customCmds: 'dele /minecraft.mojenawyki.hostingasp.pl/wwwroot/app_offline.htm'
