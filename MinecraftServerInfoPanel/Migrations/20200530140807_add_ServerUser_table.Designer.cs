@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MinecraftServerInfoPanel.Database;
 
 namespace MinecraftServerInfoPanel.Migrations
 {
     [DbContext(typeof(MinecraftDbContext))]
-    partial class MinecraftDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200530140807_add_ServerUser_table")]
+    partial class add_ServerUser_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,12 +86,10 @@ namespace MinecraftServerInfoPanel.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Xuid")
-                        .HasColumnType("nvarchar(16)")
-                        .HasMaxLength(16);
+                    b.Property<Guid>("Xuid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 

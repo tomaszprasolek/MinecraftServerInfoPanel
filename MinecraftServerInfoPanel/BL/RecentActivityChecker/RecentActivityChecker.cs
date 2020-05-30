@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using MinecraftServerInfoPanel.BL.RecentActivityEmailSender;
 using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace MinecraftServerInfoPanel.BL.RecentActivityChecker
 {
-
     public class RecentActivityChecker : IRecentActivityChecker
     {
         private readonly ILogger<RecentActivityChecker> logger;
@@ -41,6 +41,8 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityChecker
             var dbEntities = ConvertToDbConsoleLog(result)
                 .Where(r => r.Date > maxDateInDb)
                 .ToList();
+
+            CheckServerUsers(dbEntities);
 
             bool newActivitiesOnServer = false;
 
@@ -76,6 +78,36 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityChecker
             }
             dbContext.SaveChanges();
         }
+
+        private void CheckServerUsers(List<DbConsoleLog> serverlogs)
+        {
+            var distinctUsers = serverlogs
+                .Select(logEntry =>
+                {
+                    var idx = logEntry.Information.IndexOf("connected: ") + 11;
+                    var idxLast = logEntry.Information.IndexOf(", xuid");
+
+                    string userName = logEntry.Information.Substring(idx, idxLast - idx).Trim();
+                    string xuid = logEntry.Information.Substring(logEntry.Information.Length - 16, 16).Trim();
+
+                    return new ServerUser { UserName = userName, Xuid = xuid };
+                })
+                .DistinctBy(x => x.Xuid);
+
+            var usersInDb = dbContext.ServerUsers.ToList();
+
+            var newUsers = distinctUsers.Except(usersInDb).ToList();
+
+            if (newUsers.Count > 0)
+            {
+                for (int i = 0; i < newUsers.Count; i++)
+                {
+                    dbContext.ServerUsers.Add(new ServerUser { UserName = newUsers[i].UserName, Xuid = newUsers[i].Xuid });
+                }
+                dbContext.SaveChanges();
+            }
+        }
+
 
         private bool IsNeededToSendEmail(string text) => text.Contains("connected");
     }
