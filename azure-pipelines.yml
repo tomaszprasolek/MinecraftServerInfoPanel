@@ -15,8 +15,8 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
-- script: dotnet test --no-restore --verbosity normal
-  displayName: dotnet test
+# - script: dotnet test --no-restore --verbosity normal
+#   displayName: dotnet test
 - script: dotnet publish ./MinecraftServerInfoPanel/MinecraftServerInfoPanel.csproj -c Release -o ./publish
   displayName: Publish
 
@@ -39,5 +39,6 @@ steps:
     password: '$(FTP_PASSWORD)'
     rootDirectory: './publish'
     remoteDirectory: './wwwroot'
+    filePatterns: "**/MailKit.dll"
     preservePaths: true
-    customCmds: 'RNFR aaaa.txt\nRNTO bbbb.txt'
+    customCmds: RNFR aaaa.txt \n RNTO bbbb.txt
