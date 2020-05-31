@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - MinecraftServerInfoPanel</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/all.css" />
 </head>
 <body>
     <header>
@@ -19,24 +20,24 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Konsola</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index"><i class="fas fa-history"></i> Konsola</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Users">Użytkownicy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Users"><i class="fas fa-users"></i> Użytkownicy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Logs">Logi aplikacji</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Logs"><i class="fas fa-database"></i> Logi aplikacji</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Settings/Index">Ustawienia</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Settings/Index"><i class="fas fa-cogs"></i> Ustawienia</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/About">O aplikacji</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/About"><i class="fas fa-info-circle"></i> O aplikacji</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Account/Logout">Wyloguj</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Account/Logout"><i class="fas fa-sign-out-alt"></i> Wyloguj</a>
                             </li>
                         }
                     </ul>
