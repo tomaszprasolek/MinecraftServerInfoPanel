@@ -61,8 +61,14 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityEmailSender
             htmlBody.AppendLine(@"    </tbody>");
             htmlBody.AppendLine(@"</table>");
 
-            await emailSender
-                .SendEmailAsync("tomasz.prasolek@gmail.com", "Ostatnia aktywność na serwerze", htmlBody.ToString());
+
+            var emails = dbContext.Emails.Select(x => x.EmailAddress).ToList();
+
+            for (int i = 0; i < emails.Count; i++)
+            {
+                await emailSender
+                    .SendEmailAsync(emails[i], "Ostatnia aktywność na serwerze", htmlBody.ToString());
+            }
         }
 
         private void MarkLogsAsSended(List<DbConsoleLog> logs)
