@@ -9,11 +9,12 @@
 <hr />
 <h4>Emaile</h4>
 
-<p>Emaila, na które są wysyłane powiadomienia o aktywności na serwerze:</p>
+@if (Model.Message != null)
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
 
-<a asp-page="" class="btn btn-primary">Dodaj adres e-mail</a>
-<br />
-<br />
+<p>Emaila, na które są wysyłane powiadomienia o aktywności na serwerze:</p>
 
 <table class="table table-striped">
     <thead>
@@ -23,14 +24,22 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>tomasz.prasolek@gmail.com</td>
-            <td>
-                <a href="#" class="btn btn-danger">Usuń</a>
-            </td>
-        </tr>
+
+        @foreach (var email in Model.Emails)
+        {
+            <tr>
+                <td>@email.EmailAddress</td>
+                <td>
+                    <a href="#" class="btn btn-danger">Usuń</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
+<a asp-page="AddEmail" class="btn btn-primary">Dodaj adres e-mail</a>
+<a asp-page="" class="btn btn-info">Wyślij emaila testowego</a>
+
+<br /><br />
 <hr />
 <h4>Inne ustawienia</h4>
