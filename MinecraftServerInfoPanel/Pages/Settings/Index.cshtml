@@ -38,4 +38,7 @@
 </table>
 
 <a asp-page="AddEmail" class="btn btn-primary">Dodaj adres e-mail</a>
-<a asp-page="" class="btn btn-info">Wyślij emaila testowego</a>
+<br /><br />
+<form method="post" asp-page="SendTestEmail">
+    <input type="submit" value="Wyślij emaila testowego" class="btn btn-info" />
+</form>
