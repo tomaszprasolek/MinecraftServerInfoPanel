@@ -1,0 +1,36 @@
+﻿@page
+@model Settings.SettingsModel
+@{
+    ViewData["Title"] = "Ustawienia";
+}
+
+<h3>Ustawienia aplikacji</h3>
+
+<hr />
+<h4>Emaile</h4>
+
+<p>Emaila, na które są wysyłane powiadomienia o aktywności na serwerze:</p>
+
+<a asp-page="" class="btn btn-primary">Dodaj adres e-mail</a>
+<br />
+<br />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Adres email</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>tomasz.prasolek@gmail.com</td>
+            <td>
+                <a href="#" class="btn btn-danger">Usuń</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr />
+<h4>Inne ustawienia</h4>
