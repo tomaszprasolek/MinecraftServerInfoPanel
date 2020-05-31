@@ -30,7 +30,7 @@
             <tr>
                 <td>@email.EmailAddress</td>
                 <td>
-                    <a href="#" class="btn btn-danger">Usuń</a>
+                    <a asp-page="DeleteEmail" asp-route-id="@email.Id" class="btn btn-danger btnDeleteEmail">Usuń</a>
                 </td>
             </tr>
         }
@@ -39,7 +39,3 @@
 
 <a asp-page="AddEmail" class="btn btn-primary">Dodaj adres e-mail</a>
 <a asp-page="" class="btn btn-info">Wyślij emaila testowego</a>
-
-<br /><br />
-<hr />
-<h4>Inne ustawienia</h4>
