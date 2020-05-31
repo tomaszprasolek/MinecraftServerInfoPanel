@@ -15,5 +15,7 @@ namespace MinecraftServerInfoPanel.Database
         public DbSet<Log> Logs { get; set; }
 
         public DbSet<ServerUser> ServerUsers { get; set; }
+
+        public DbSet<Email> Emails { get; set; }
     }
 }
