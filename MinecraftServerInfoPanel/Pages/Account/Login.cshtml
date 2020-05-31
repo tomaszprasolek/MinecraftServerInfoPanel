@@ -9,7 +9,14 @@
         <form method="post">
             <div class="form-group">
                 <label asp-for="Password">Hasło</label>
-                <input asp-for="Password" class="form-control" type="password" />
+                @if (string.IsNullOrWhiteSpace(Model.Password))
+                {
+                    <input asp-for="Password" class="form-control" type="password" />
+                }
+                else
+                {
+                    <input asp-for="Password" class="form-control" type="password" value="@Model.Password" />
+                }
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
