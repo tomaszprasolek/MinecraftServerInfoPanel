@@ -96,13 +96,17 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityChecker
 
             var usersInDb = dbContext.ServerUsers.ToList();
 
-            var newUsers = distinctUsers.Except(usersInDb).ToList();
+            var newUsers = distinctUsers.Select(x => x.UserName)
+                .Except(usersInDb.Select(y => y.UserName))
+                .ToList();
 
             if (newUsers.Count > 0)
             {
                 for (int i = 0; i < newUsers.Count; i++)
                 {
-                    dbContext.ServerUsers.Add(new ServerUser { UserName = newUsers[i].UserName, Xuid = newUsers[i].Xuid });
+                    string userName = newUsers[i];
+                    string xuid = distinctUsers.Where(x => x.UserName == newUsers[i]).Select(x => x.Xuid).FirstOrDefault();
+                    dbContext.ServerUsers.Add(new ServerUser { UserName = userName, Xuid = xuid });
                 }
                 dbContext.SaveChanges();
             }
