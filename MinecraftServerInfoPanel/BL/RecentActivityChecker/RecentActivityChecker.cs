@@ -59,14 +59,28 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityChecker
 
         private IEnumerable<DbConsoleLog> ConvertToDbConsoleLog(List<ConsoleLog> list)
         {
-            return list
-                .Where(r => r.text.Contains("Running AutoCompaction...") == false)
+            var result = list
+                .Where(r => r.text.Contains("Running AutoCompaction...") == false);
+
+            var logsWithdate = result
+                .Where(r => DateTime.TryParse(r.text.Substring(1, 19), out _))
                 .Select(r => new DbConsoleLog
                 {
                     Date = Convert.ToDateTime(r.text.Substring(1, 19)),
                     Information = r.text[26..].Trim(),
                     IsNeededToSendEmail = IsNeededToSendEmail(r.text)
                 });
+
+            var logsWithoutDate = result
+                .Where(r => DateTime.TryParse(r.text.Substring(1, 19), out _) == false)
+                .Select(r => new DbConsoleLog
+                {
+                    Date = DateTime.Now,
+                    Information = r.text.Trim(),
+                    IsNeededToSendEmail = IsNeededToSendEmail(r.text)
+                });
+
+            return logsWithdate.Concat(logsWithoutDate);
         }
 
         private void AddServerLogsToDb(List<DbConsoleLog> serverlogs)
@@ -82,6 +96,7 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityChecker
         private void CheckServerUsers(List<DbConsoleLog> serverlogs)
         {
             var distinctUsers = serverlogs
+                .Where(x => x.Information.Contains("connected"))
                 .Select(logEntry =>
                 {
                     var idx = logEntry.Information.IndexOf("connected: ") + 11;
