@@ -33,7 +33,7 @@ namespace MinecraftServerInfoPanel.Pages.Account
                 Password = configuration["Password"];
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             if (Password != configuration["Password"])
             {
@@ -47,6 +47,8 @@ namespace MinecraftServerInfoPanel.Pages.Account
             var principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
+            if (string.IsNullOrWhiteSpace(returnUrl) == false)
+                return RedirectToPage(returnUrl);
             return RedirectToPage("../Index");
         }
     }
