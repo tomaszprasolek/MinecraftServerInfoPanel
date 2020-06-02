@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using MinecraftServerInfoPanel.BL.RecentActivityEmailSender;
 using MinecraftServerInfoPanel.Database;
 using MinecraftServerInfoPanel.Helpers;
+using Org.BouncyCastle.Math.EC.Rfc7748;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityChecker
 
             for (int i = 0; i < result.Count; i++)
             {
-                result[i].HasDateInText = DateTime.TryParse(result[i].text.Substring(1, 19), out _);
+                result[i].HasDateInText = DateTime.TryParse(GetDateFromServerLog(result[i].text), out _);
             }
 
             DateTime maxDateInDb;
@@ -69,22 +70,24 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityChecker
             return newActivitiesOnServer;
         }
 
+        private string GetDateFromServerLog(string log) => log.Substring(1, 19);
+
         private IEnumerable<DbConsoleLog> ConvertToDbConsoleLog(List<ConsoleLog> list)
         {
             var result = list
                 .Where(r => r.text.Contains("Running AutoCompaction...") == false);
 
             var logsWithdate = result
-                .Where(r => DateTime.TryParse(r.text.Substring(1, 19), out _))
+                .Where(r => DateTime.TryParse(GetDateFromServerLog(r.text), out _))
                 .Select(r => new DbConsoleLog
                 {
-                    Date = Convert.ToDateTime(r.text.Substring(1, 19)),
+                    Date = Convert.ToDateTime(GetDateFromServerLog(r.text)),
                     Information = r.text[26..].Trim(),
                     IsNeededToSendEmail = IsNeededToSendEmail(r.text)
                 });
 
             var logsWithoutDate = result
-                .Where(r => DateTime.TryParse(r.text.Substring(1, 19), out _) == false)
+                .Where(r => DateTime.TryParse(GetDateFromServerLog(r.text), out _) == false)
                 .Select(r => new DbConsoleLog
                 {
                     Date = DateTime.Now,
