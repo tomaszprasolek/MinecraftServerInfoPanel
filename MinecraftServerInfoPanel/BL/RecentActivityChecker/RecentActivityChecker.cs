@@ -32,25 +32,37 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityChecker
         {
             List<ConsoleLog> result = await consoleDataDowloader.Download();
 
+            for (int i = 0; i < result.Count; i++)
+            {
+                result[i].HasDateInText = DateTime.TryParse(result[i].text.Substring(1, 19), out _);
+            }
+
             DateTime maxDateInDb;
             if (dbContext.ConsoleLogs.Count() == 0)
                 maxDateInDb = DateTime.MinValue;
             else
                 maxDateInDb = dbContext.ConsoleLogs.Max(x => x.Date);
 
-            var dbEntities = ConvertToDbConsoleLog(result)
+            var logsWithDate = ConvertToDbConsoleLog(result.Where(x => x.HasDateInText).ToList())
                 .Where(r => r.Date > maxDateInDb)
                 .ToList();
 
-            CheckServerUsers(dbEntities);
+            var logsWithoutDate = ConvertToDbConsoleLog(result.Where(x => x.HasDateInText == false).ToList())
+                .ToList();
+
+            CheckServerUsers(logsWithDate);
 
             bool newActivitiesOnServer = false;
 
-            if (dbEntities.Count > 0)
+            if (logsWithDate.Count > 0)
             {
-                AddServerLogsToDb(dbEntities);
+                AddServerLogsToDb(logsWithDate);
                 newActivitiesOnServer = true;
             }
+
+            bool newLogsWithoutDate = dbContext.ConsoleLogs.Where(x => logsWithoutDate.Select(x => x.Information).Contains(x.Information)).Count() == 0;
+            if (newLogsWithoutDate)
+                AddServerLogsToDb(logsWithoutDate);
 
             await recentActivityEmailSender.Send();
 
