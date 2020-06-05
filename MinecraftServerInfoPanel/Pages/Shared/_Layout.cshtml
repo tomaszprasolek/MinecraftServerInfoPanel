@@ -28,9 +28,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Settings/Index"><i class="fas fa-cogs"></i> Ustawienia</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/About"><i class="fas fa-info-circle"></i> O aplikacji</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-caret-square-down"></i> Opcje
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-page="/Changelog"><i class="fas fa-list"></i> Zmiany</a>
+                                <a class="dropdown-item" asp-area="" asp-page="/Logs"><i class="fas fa-database"></i> Logi</a>
+                                <a class="dropdown-item" asp-area="" asp-page="/About"><i class="fas fa-info-circle"></i> O aplikacji</a>
+                            </div>
                         </li>
+
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
