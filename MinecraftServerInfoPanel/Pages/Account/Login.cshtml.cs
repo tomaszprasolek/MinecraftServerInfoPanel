@@ -47,7 +47,7 @@ namespace MinecraftServerInfoPanel.Pages.Account
             var principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-            if (string.IsNullOrWhiteSpace(returnUrl) == false)
+            if (string.IsNullOrWhiteSpace(returnUrl) == false && returnUrl != "/")
                 return RedirectToPage(returnUrl);
             return RedirectToPage("../Index");
         }
