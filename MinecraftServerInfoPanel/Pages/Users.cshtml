@@ -20,7 +20,11 @@
             <td>@user.Name</td>
             <td>@user.LastTimeOnServer</td>
             <td>@user.PlayTimeFriendly</td>
-            <td>@user.Description</td>
+            <td>
+                @user.Description
+                <a asp-page="Users/Edit" 
+                   asp-route-id="@user.Id"><i class="fas fa-edit"></i></a>
+            </td>
         </tr>
         }
     </tbody>

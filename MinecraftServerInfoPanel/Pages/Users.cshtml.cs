@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MinecraftServerInfoPanel.Database;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace MinecraftServerInfoPanel.Pages
@@ -22,7 +23,7 @@ namespace MinecraftServerInfoPanel.Pages
         public void OnGet()
         {
             var users = dbContext.ServerUsers
-                .Select(x => new { x.UserName, x.Description })
+                .Select(x => new { x.Id, x.UserName, x.Description })
                 .ToList();
 
             Users = new List<ServerUserViewModel>(users.Count);
@@ -31,6 +32,7 @@ namespace MinecraftServerInfoPanel.Pages
             {
                 Users.Add(new ServerUserViewModel
                 {
+                    Id = users[i].Id,
                     Name = users[i].UserName,
                     PlayTime = CountUserPlayTime(users[i].UserName),
                     LastTimeOnServer = GetLastTimeOnServer(users[i].UserName),
@@ -83,6 +85,7 @@ namespace MinecraftServerInfoPanel.Pages
 
     public class ServerUserViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public TimeSpan PlayTime { get; set; }
 
@@ -90,6 +93,7 @@ namespace MinecraftServerInfoPanel.Pages
 
         public DateTime LastTimeOnServer { get; set; }
 
+        [Display(Name = "Opis")]
         public string Description { get; set; }
     }
 }
