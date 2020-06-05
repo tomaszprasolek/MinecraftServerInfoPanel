@@ -6,16 +6,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace MinecraftServerInfoPanel.Pages
+namespace MinecraftServerInfoPanel.Pages.Users
 {
     [Authorize]
-    public class UsersModel : PageModel
+    public class IndexModel : PageModel
     {
         private readonly MinecraftDbContext dbContext;
 
         public List<ServerUserViewModel> Users { get; set; }
 
-        public UsersModel(MinecraftDbContext dbContext)
+        public IndexModel(MinecraftDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

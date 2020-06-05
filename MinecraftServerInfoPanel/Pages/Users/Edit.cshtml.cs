@@ -50,7 +50,7 @@ namespace MinecraftServerInfoPanel.Pages.Users
             serverUser.Description = ViewModel.Description;
             dbContext.SaveChanges();
 
-            return RedirectToPage("../Users");
+            return RedirectToPage("Index");
         }
     }
 }
