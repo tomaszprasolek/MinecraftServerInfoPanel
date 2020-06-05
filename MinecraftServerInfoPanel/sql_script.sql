@@ -129,3 +129,18 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200605055538_addDecsriptionColumnToServerUsersTable')
+BEGIN
+    ALTER TABLE [ServerUsers] ADD [Description] nvarchar(max) NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200605055538_addDecsriptionColumnToServerUsersTable')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20200605055538_addDecsriptionColumnToServerUsersTable', N'3.1.3');
+END;
+
+GO
+
