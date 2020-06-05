@@ -21,7 +21,9 @@ namespace MinecraftServerInfoPanel.Pages
 
         public void OnGet()
         {
-            List<string> users = dbContext.ServerUsers.Select(x => x.UserName).ToList();
+            var users = dbContext.ServerUsers
+                .Select(x => new { x.UserName, x.Description })
+                .ToList();
 
             Users = new List<ServerUserViewModel>(users.Count);
 
@@ -29,9 +31,10 @@ namespace MinecraftServerInfoPanel.Pages
             {
                 Users.Add(new ServerUserViewModel
                 {
-                    Name = users[i],
-                    PlayTime = CountUserPlayTime(users[i]),
-                    LastTimeOnServer = GetLastTimeOnServer(users[i])
+                    Name = users[i].UserName,
+                    PlayTime = CountUserPlayTime(users[i].UserName),
+                    LastTimeOnServer = GetLastTimeOnServer(users[i].UserName),
+                    Description = users[i].Description
                 });
             }
         }
@@ -86,5 +89,7 @@ namespace MinecraftServerInfoPanel.Pages
         public string PlayTimeFriendly => PlayTime.ToString(@"hh\:mm\:ss");
 
         public DateTime LastTimeOnServer { get; set; }
+
+        public string Description { get; set; }
     }
 }
