@@ -30,7 +30,7 @@ jobs:
       with:
         files: '**/appsettings.json'
       env:
-        WriteTo.1.Args.configureLogger.WriteTo.0.Args.connectionString: 'connString'
+        Serilog.WriteTo.1.Args.configureLogger.WriteTo.0.Args.connectionString: "connString"
     - uses: actions/upload-artifact@v2
       with:
         path: ./publish/
