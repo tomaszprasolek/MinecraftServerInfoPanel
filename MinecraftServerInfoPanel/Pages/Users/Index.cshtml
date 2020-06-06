@@ -1,5 +1,5 @@
 ﻿@page
-@model MinecraftServerInfoPanel.Pages.UsersModel
+@model MinecraftServerInfoPanel.Pages.Users.IndexModel
 @{
     ViewData["Title"] = "Użytkownicy";
 }
@@ -10,6 +10,7 @@
             <th scope="col">Użytkownik</th>
             <th scope="col">Ostatni raz grał na serwerze</th>
             <th scope="col">Całkowity czas gry [hh/mm/ss]</th>
+            <th scope="col">Opis</th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +20,11 @@
             <td>@user.Name</td>
             <td>@user.LastTimeOnServer</td>
             <td>@user.PlayTimeFriendly</td>
+            <td>
+                @user.Description
+                <a asp-page="Edit" 
+                   asp-route-id="@user.Id"><i class="fas fa-edit"></i></a>
+            </td>
         </tr>
         }
     </tbody>
