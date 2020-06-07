@@ -4,6 +4,15 @@
     ViewData["Title"] = "Statystyki gracza";
 }
 
-<h4>Statystyki gracza @Model.UserName</h4>
+<p>Wybierz użytkownika:</p>
+<select name="UserId" asp-items="Model.Users"></select>
+<br />
+<br />
+
+Zakres:
+<br />
+<button type="button" class="btn btn-primary">Dzień</button>
+<button type="button" class="btn btn-primary">Tydzień</button>
+<button type="button" class="btn btn-primary">Miesiąc</button>
 
 <p>Czas gry: @Model.PlayTime</p>

@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MinecraftServerInfoPanel.Database;
+using Org.BouncyCastle.Math.EC.Rfc7748;
 
 namespace MinecraftServerInfoPanel.Pages.Users.Statistics
 {
@@ -13,24 +17,40 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
 
         public string UserName { get; set; }
         public string PlayTime { get; set; }
-        
+
+        public SelectList Users { get; set; }
+
 
         public DayModel(MinecraftDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public void OnGet(int userId, DateTime? date)
+        public IActionResult OnGet(int userId, DateTime? date)
+        {
+            var user = dbContext.ServerUsers.Find(userId);
+            if (user == null)
+            {
+                return RedirectToPage("./NotFound");
+            }
+
+            Users = new SelectList(dbContext.ServerUsers, nameof(ServerUser.Id), nameof(ServerUser.UserName));
+
+            PlayTime = CalculateUserPlayTime(user.UserName, date).ToString(@"hh\:mm\:ss");
+            UserName = user.UserName;
+
+            return Page();
+        }
+
+        private TimeSpan CalculateUserPlayTime(string userName, DateTime? date)
         {
             if (date == null) date = DateTime.Now;
 
-            var user = dbContext.ServerUsers.Find(userId);
-
             DateTime dateFrom = new DateTime(
-                date.Value.Year,
-                date.Value.Month,
-                date.Value.Day,
-                0, 0, 0);
+               date.Value.Year,
+               date.Value.Month,
+               date.Value.Day,
+               0, 0, 0);
 
             DateTime dateTo = new DateTime(
                 date.Value.Year,
@@ -39,7 +59,7 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
                 23, 59, 59);
 
             var timeLog = dbContext.ConsoleLogs
-                .Where(x => x.Information.Contains(user.UserName))
+                .Where(x => x.Information.Contains(userName))
                 .Where(x => x.Information.Contains("connected") ||
                             x.Information.Contains("disconnected"))
                 .Where(x => x.Date > dateFrom && x.Date < dateTo)
@@ -66,8 +86,7 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
                 totalMiliseconds += (playPerionEndTime - log.Date).TotalMilliseconds;
             }
 
-            PlayTime = TimeSpan.FromMilliseconds(totalMiliseconds).ToString(@"hh\:mm\:ss");
-            UserName = user.UserName;
+            return TimeSpan.FromMilliseconds(totalMiliseconds);
         }
     }
 }
