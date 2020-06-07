@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MinecraftServerInfoPanel.Database;
-using Org.BouncyCastle.Math.EC.Rfc7748;
+using System;
+using System.Linq;
 
 namespace MinecraftServerInfoPanel.Pages.Users.Statistics
 {
@@ -15,20 +13,25 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
     {
         private readonly MinecraftDbContext dbContext;
 
-        public string UserName { get; set; }
-        public string PlayTime { get; set; }
-
+        // List to select
         public SelectList Users { get; set; }
 
+        // List to radio
+        public string[] Periods { get; set; } = Enum.GetNames(typeof(TimePeriod));
+
+        [BindProperty(SupportsGet = true)]
+        public DayViewModel ViewModel { get; set; }
+
+        public string PlayTime { get; set; }
 
         public DayModel(MinecraftDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public IActionResult OnGet(int userId, DateTime? date)
+        public IActionResult OnGet()
         {
-            var user = dbContext.ServerUsers.Find(userId);
+            var user = dbContext.ServerUsers.Find(ViewModel.UserId);
             if (user == null)
             {
                 return RedirectToPage("./NotFound");
@@ -36,27 +39,17 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
 
             Users = new SelectList(dbContext.ServerUsers, nameof(ServerUser.Id), nameof(ServerUser.UserName));
 
-            PlayTime = CalculateUserPlayTime(user.UserName, date).ToString(@"hh\:mm\:ss");
-            UserName = user.UserName;
+            if (ViewModel.Date == DateTime.MinValue) ViewModel.Date = DateTime.Now.Date;
+            PlayTime = CalculateUserPlayTime(user.UserName, (TimePeriod)Enum.Parse(typeof(TimePeriod), ViewModel.Period, true), ViewModel.Date)
+                .ToString(@"hh\:mm\:ss");
 
             return Page();
         }
 
-        private TimeSpan CalculateUserPlayTime(string userName, DateTime? date)
+        private TimeSpan CalculateUserPlayTime(string userName, TimePeriod period, DateTime? date)
         {
-            if (date == null) date = DateTime.Now;
-
-            DateTime dateFrom = new DateTime(
-               date.Value.Year,
-               date.Value.Month,
-               date.Value.Day,
-               0, 0, 0);
-
-            DateTime dateTo = new DateTime(
-                date.Value.Year,
-                date.Value.Month,
-                date.Value.Day,
-                23, 59, 59);
+            DateTime dateFrom = GetFromDate(period, date.Value);
+            DateTime dateTo = GetToDate(period, date.Value);
 
             var timeLog = dbContext.ConsoleLogs
                 .Where(x => x.Information.Contains(userName))
@@ -87,6 +80,77 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
             }
 
             return TimeSpan.FromMilliseconds(totalMiliseconds);
+        }
+
+        private DateTime GetFromDate(TimePeriod period, DateTime date)
+        {
+            switch (period)
+            {
+                case TimePeriod.Day:
+                    return new DateTime(
+                       date.Year,
+                       date.Month,
+                       date.Day,
+                       0, 0, 0);
+                case TimePeriod.Week:
+                    return date.StartOfWeek(DayOfWeek.Monday);
+                case TimePeriod.Month:
+                    return new DateTime(date.Year, date.Month, 1);
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        private DateTime GetToDate(TimePeriod period, DateTime date)
+        {
+            switch (period)
+            {
+                case TimePeriod.Day:
+                    return new DateTime(
+                       date.Year,
+                       date.Month,
+                       date.Day,
+                       23, 59, 59);
+                case TimePeriod.Week:
+                    return date.EndOfWeek(DayOfWeek.Monday);
+                case TimePeriod.Month:
+                    return new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+    }
+
+    public class DayViewModel
+    {
+        public int UserId { get; set; }
+
+        public string Period { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public string PreviousDay => Date.AddDays(-1).ToString("yyyy-MM-dd");
+
+        public string NextDay => Date.AddDays(1).ToString("yyyy-MM-dd");
+    }
+
+    public enum TimePeriod
+    {
+        Day, Week, Month
+    }
+
+
+    public static class DateTimeExtensions
+    {
+        public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
+        {
+            int diff = (7 + (dt.DayOfWeek - startOfWeek)) % 7;
+            return dt.AddDays(-1 * diff).Date;
+        }
+
+        public static DateTime EndOfWeek(this DateTime dt, DayOfWeek startOfWeek)
+        {
+            return dt.StartOfWeek(startOfWeek).AddDays(6);
         }
     }
 }
