@@ -17,7 +17,7 @@
         @foreach (var user in Model.Users)
         {
         <tr>
-            <td>@user.Name</td>
+            <td><a asp-page="Statistics/Day" asp-route-userId="@user.Id">@user.Name</a></td>
             <td>@user.LastTimeOnServer</td>
             <td>@user.PlayTimeFriendly</td>
             <td>
