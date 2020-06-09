@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MimeKit.Encodings;
 using MinecraftServerInfoPanel.BL;
 using MinecraftServerInfoPanel.BL.EmailSender;
+using MinecraftServerInfoPanel.BL.PlayTimeCalculator;
 using MinecraftServerInfoPanel.BL.RecentActivityChecker;
 using MinecraftServerInfoPanel.BL.RecentActivityEmailSender;
 using MinecraftServerInfoPanel.Database;
@@ -47,6 +47,7 @@ namespace MinecraftServerInfoPanel
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IRecentActivityEmailSender, RecentActivityEmailSender>();
             services.AddScoped<IRecentActivityChecker, RecentActivityChecker>();
+            services.AddScoped<IPlayTimeCalculator, PlayTimeCalculator>();
 
             if (env.IsProduction())
                 services.AddHostedService<CheckConsoleBackgroundService>();
