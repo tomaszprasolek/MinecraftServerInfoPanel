@@ -5,11 +5,6 @@ using System.Linq;
 
 namespace MinecraftServerInfoPanel.BL.PlayTimeCalculator
 {
-    public interface IPlayTimeCalculator
-    {
-        TimeSpan CalculateUserPlayTime(string userName, TimePeriod period, DateTime? date);
-    }
-
     public class PlayTimeCalculator : IPlayTimeCalculator
     {
         private readonly MinecraftDbContext dbContext;
@@ -19,16 +14,27 @@ namespace MinecraftServerInfoPanel.BL.PlayTimeCalculator
             this.dbContext = dbContext;
         }
 
+        public TimeSpan CalculateUserAllPlayTime(string userName)
+        {
+            return CalculateUserPlayTime(userName, TimePeriod.AllTime, null);
+        }
+
         public TimeSpan CalculateUserPlayTime(string userName, TimePeriod period, DateTime? date)
         {
-            DateTime dateFrom = GetFromDate(period, date.Value);
-            DateTime dateTo = GetToDate(period, date.Value);
-
-            var timeLog = dbContext.ConsoleLogs
+            var logs = dbContext.ConsoleLogs
                 .Where(x => x.Information.Contains(userName))
                 .Where(x => x.Information.Contains("connected") ||
-                            x.Information.Contains("disconnected"))
-                .Where(x => x.Date > dateFrom && x.Date < dateTo)
+                            x.Information.Contains("disconnected"));
+
+            if (period != TimePeriod.AllTime)
+            {
+                DateTime dateFrom = GetFromDate(period, date.Value);
+                DateTime dateTo = GetToDate(period, date.Value);
+
+                logs = logs.Where(x => x.Date > dateFrom && x.Date < dateTo);
+            }
+
+            var timeLog = logs
                 .OrderByDescending(x => x.Date)
                 .ToList();
 

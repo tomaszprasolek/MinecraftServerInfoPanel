@@ -2,6 +2,6 @@
 {
     public enum TimePeriod
     {
-        Day, Week, Month
+        Day, Week, Month, AllTime
     }
 }
