@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.Helpers;
 using System;
 using System.Linq;
 
@@ -137,20 +138,5 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
     public enum TimePeriod
     {
         Day, Week, Month
-    }
-
-
-    public static class DateTimeExtensions
-    {
-        public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
-        {
-            int diff = (7 + (dt.DayOfWeek - startOfWeek)) % 7;
-            return dt.AddDays(-1 * diff).Date;
-        }
-
-        public static DateTime EndOfWeek(this DateTime dt, DayOfWeek startOfWeek)
-        {
-            return dt.StartOfWeek(startOfWeek).AddDays(6);
-        }
     }
 }
