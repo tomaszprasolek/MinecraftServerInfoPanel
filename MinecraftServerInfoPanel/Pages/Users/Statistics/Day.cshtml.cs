@@ -38,13 +38,15 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
                 .Select(x => new { x.Id, x.UserName })
                 .ToList();
 
-            if (Date == DateTime.MinValue) Date = DateTime.Now.Date;
+            if (Date == DateTime.MinValue)
+                Date = DateTime.Now.Date;
 
             ViewModel = users.Select(x => new UserDayStatisticsViewmodel
             {
                 UserName = x.UserName,
-                PlayTime = playTimeCalculator.CalculateUserPlayTime(x.UserName, Period, Date).ToString(@"hh\:mm\:ss")
+                PlayTime = playTimeCalculator.CalculateUserPlayTime(x.UserName, Period, Date)
             })
+            .OrderByDescending(x => x.PlayTime)
             .ToList();
 
             return Page();
@@ -55,6 +57,8 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
     {
         public string UserName { get; set; }
 
-        public string PlayTime { get; set; }
+        public TimeSpan PlayTime { get; set; }
+
+        public string PlayTimeFriendly => PlayTime.ToString(@"hh\:mm\:ss");
     }
 }
