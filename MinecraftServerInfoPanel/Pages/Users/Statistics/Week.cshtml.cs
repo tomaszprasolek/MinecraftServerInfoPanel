@@ -27,6 +27,8 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
         public string PreviousWeek => selectedWeek.GetPreviousWeek().ToString();
         public string NextWeek => selectedWeek.GetNextWeek().ToString();
 
+        public string DaysInWeekInfo => selectedWeek.GetDaysInWeekPeriod();
+
         public WeekModel(MinecraftDbContext dbContext, IPlayTimeCalculator playTimeCalculator)
         {
             this.dbContext = dbContext;
@@ -40,6 +42,8 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
                 .ToList();
 
             selectedWeek = Statistics.Week.ToWeek(Week);
+            if (string.IsNullOrWhiteSpace(Week))
+                Week = selectedWeek.ToString();
 
             ViewModel = users.Select(x => new UserDayStatisticsViewmodel
             {
@@ -92,11 +96,20 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
         public Week GetPreviousWeek()
         {
             if (WeekNr == 1)
-            {
                 return new Week(Year - 1, ISOWeek.GetWeeksInYear(Year - 1));
-            }
 
             return new Week(Year, WeekNr - 1);
+        }
+
+        public string GetDaysInWeekPeriod()
+        {
+            var firstDayInWeek = GetFirstDayOfWeek();
+            var lastDayInWeek = ISOWeek.ToDateTime(Year, WeekNr, DayOfWeek.Sunday);
+
+            if (firstDayInWeek.Year != lastDayInWeek.Year)
+                return $"{firstDayInWeek:dd.MM.yyyy} - {lastDayInWeek:dd.MM.yyyy}";
+
+            return $"{firstDayInWeek:dd.MM} - {lastDayInWeek:dd.MM}.{Year}";
         }
 
         public override string ToString()
