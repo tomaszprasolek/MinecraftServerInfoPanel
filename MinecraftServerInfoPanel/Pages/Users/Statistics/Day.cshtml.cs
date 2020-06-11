@@ -59,6 +59,14 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
 
         public TimeSpan PlayTime { get; set; }
 
-        public string PlayTimeFriendly => PlayTime.ToString(@"hh\:mm\:ss");
+        public string PlayTimeFriendly
+        {
+            get 
+            {
+                if (PlayTime.TotalDays >= 1)
+                    return $"{PlayTime:%d} dni {PlayTime:hh\\:mm\\:ss}";
+                return $"{PlayTime:hh\\:mm\\:ss}";
+            }
+        }
     }
 }
