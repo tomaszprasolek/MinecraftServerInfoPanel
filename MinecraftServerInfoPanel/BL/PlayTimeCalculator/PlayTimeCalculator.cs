@@ -91,9 +91,14 @@ namespace MinecraftServerInfoPanel.BL.PlayTimeCalculator
                        date.Day,
                        23, 59, 59);
                 case TimePeriod.Week:
-                    return date.EndOfWeek(DayOfWeek.Monday);
+                    var endOfWeek =  date.EndOfWeek(DayOfWeek.Monday);
+                    return new DateTime(
+                       endOfWeek.Year,
+                       endOfWeek.Month,
+                       endOfWeek.Day,
+                       23, 59, 59);
                 case TimePeriod.Month:
-                    return new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+                    return new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59);
                 default:
                     throw new NotImplementedException();
             }
