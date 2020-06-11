@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using MinecraftServerInfoPanel.BL.PlayTimeCalculator;
 using MinecraftServerInfoPanel.Database;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MinecraftServerInfoPanel.Pages.Users.Statistics
 {
@@ -14,13 +15,16 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
         private readonly MinecraftDbContext dbContext;
         private readonly IPlayTimeCalculator playTimeCalculator;
 
-        // List to select
-        public SelectList Users { get; set; }
+        public List<UserDayStatisticsViewmodel> ViewModel { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public DayViewModel ViewModel { get; set; }
+        public DateTime Date { get; set; }
 
-        public string PlayTime { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public TimePeriod Period { get; set; }
+
+        public string PreviousDay => Date.AddDays(-1).ToString("yyyy-MM-dd");
+        public string NextDay => Date.AddDays(1).ToString("yyyy-MM-dd");
 
         public DayModel(MinecraftDbContext dbContext, IPlayTimeCalculator playTimeCalculator)
         {
@@ -30,32 +34,27 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
 
         public IActionResult OnGet()
         {
-            var user = dbContext.ServerUsers.Find(ViewModel.UserId);
-            if (user == null)
+            var users = dbContext.ServerUsers
+                .Select(x => new { x.Id, x.UserName })
+                .ToList();
+
+            if (Date == DateTime.MinValue) Date = DateTime.Now.Date;
+
+            ViewModel = users.Select(x => new UserDayStatisticsViewmodel
             {
-                return RedirectToPage("./NotFound");
-            }
-
-            Users = new SelectList(dbContext.ServerUsers, nameof(ServerUser.Id), nameof(ServerUser.UserName));
-
-            if (ViewModel.Date == DateTime.MinValue) ViewModel.Date = DateTime.Now.Date;
-            PlayTime = playTimeCalculator.CalculateUserPlayTime(user.UserName, (TimePeriod)Enum.Parse(typeof(TimePeriod), ViewModel.Period, true), ViewModel.Date)
-                .ToString(@"hh\:mm\:ss");
+                UserName = x.UserName,
+                PlayTime = playTimeCalculator.CalculateUserPlayTime(x.UserName, Period, Date).ToString(@"hh\:mm\:ss")
+            })
+            .ToList();
 
             return Page();
         }
     }
 
-    public class DayViewModel
+    public class UserDayStatisticsViewmodel
     {
-        public int UserId { get; set; }
+        public string UserName { get; set; }
 
-        public string Period { get; set; }
-
-        public DateTime Date { get; set; }
-
-        public string PreviousDay => Date.AddDays(-1).ToString("yyyy-MM-dd");
-
-        public string NextDay => Date.AddDays(1).ToString("yyyy-MM-dd");
+        public string PlayTime { get; set; }
     }
 }

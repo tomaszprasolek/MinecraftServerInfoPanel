@@ -4,45 +4,40 @@
     ViewData["Title"] = "Statystyki użytkownika";
 }
 
-<div class="row">
-    <div class="col-md-4 offset-md-4">
+<form method="get">
 
-        <form method="get">
-            <div class="form-group">
-                <label for="UserId">Wybierz użytkownika:</label>
-                <select asp-items="Model.Users" asp-for="ViewModel.UserId" class="form-control"></select>
-            </div>
+    <input type="hidden" asp-for="Period" value="Day" />
 
-            @*<div class="form-group">
-                Zakres:
-                @foreach (var period in Model.Periods)
-                {
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" asp-for="Period" id="Period_@(period)" value="@period">
-                        <label class="form-check-label" asp-for="Period">@period</label>
-                    </div>
-                }
-            </div>*@
-
-            <input type="hidden" asp-for="ViewModel.Period" value="Day" />
-
-            <div class="form-group">
-                <label for="date">Wybierz dzień:</label>
-                <input type="date" asp-for="ViewModel.Date" value="@Model.ViewModel.Date.ToString("yyyy-MM-dd")">
-            </div>
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-success">Pokaż</button>
-            </div>
-        </form>
-
-        <a asp-page="Day" asp-route-UserId="@Model.ViewModel.UserId" asp-route-Period="Day" asp-route-Date="@Model.ViewModel.PreviousDay" class="btn btn-primary">Poprzedni dzień</a>
-        <a asp-page="Day" asp-route-UserId="@Model.ViewModel.UserId" asp-route-Period="Day" asp-route-Date="@Model.ViewModel.NextDay" class="btn btn-primary">Następny dzień</a>
-
-        <br />
-
-        <p>
-            Czas gry: <b>@Model.PlayTime</b>
-        </p>
+    <div class="form-group">
+        <label for="date">Wybierz dzień:</label>
+        <input type="date" asp-for="Date" value="@Model.Date.ToString("yyyy-MM-dd")">
     </div>
-</div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Pokaż</button>
+    </div>
+</form>
+
+<a asp-page="Day" asp-route-Period="Day" asp-route-Date="@Model.PreviousDay" class="btn btn-primary">Poprzedni dzień</a>
+<a asp-page="Day" asp-route-Period="Day" asp-route-Date="@Model.NextDay" class="btn btn-primary">Następny dzień</a>
+
+<br />
+
+<table class="table table-striped table-bordered ">
+    <thead>
+        <tr>
+            <th>Użytkownik</th>
+            <th>Czas gry</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var user in Model.ViewModel)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.PlayTime</td>
+            </tr>
+        }
+    </tbody>
+</table>
