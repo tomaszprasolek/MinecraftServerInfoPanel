@@ -4,6 +4,11 @@
     ViewData["Title"] = "Użytkownicy";
 }
 
+<a asp-page="Statistics/Day" asp-route-period="Day" class="btn btn-primary btn-sm">Statystyka dzienna</a>
+
+<br />
+<br />
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -17,7 +22,7 @@
         @foreach (var user in Model.Users)
         {
         <tr>
-            <td><a asp-page="Statistics/Day" asp-route-userId="@user.Id" asp-route-period="Day">@user.Name</a></td>
+            <td>@user.Name</td>
             <td>@user.LastTimeOnServer</td>
             <td>@user.PlayTimeFriendly</td>
             <td>
