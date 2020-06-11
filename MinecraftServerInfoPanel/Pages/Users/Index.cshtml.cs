@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MinecraftServerInfoPanel.BL.PlayTimeCalculator;
 using MinecraftServerInfoPanel.Database;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,14 @@ namespace MinecraftServerInfoPanel.Pages.Users
     public class IndexModel : PageModel
     {
         private readonly MinecraftDbContext dbContext;
+        private readonly IPlayTimeCalculator playTimeCalculator;
 
         public List<ServerUserViewModel> Users { get; set; }
 
-        public IndexModel(MinecraftDbContext dbContext)
+        public IndexModel(MinecraftDbContext dbContext, IPlayTimeCalculator playTimeCalculator)
         {
             this.dbContext = dbContext;
+            this.playTimeCalculator = playTimeCalculator;
         }
 
         public void OnGet()
@@ -34,7 +37,7 @@ namespace MinecraftServerInfoPanel.Pages.Users
                 {
                     Id = users[i].Id,
                     Name = users[i].UserName,
-                    PlayTime = CountUserPlayTime(users[i].UserName),
+                    PlayTime = playTimeCalculator.CalculateUserAllPlayTime(users[i].UserName),
                     LastTimeOnServer = GetLastTimeOnServer(users[i].UserName),
                     Description = users[i].Description
                 });
@@ -48,38 +51,6 @@ namespace MinecraftServerInfoPanel.Pages.Users
                 .Where(x => x.Information.Contains("connected") &&
                          x.Information.Contains("disconnected") == false)
                 .Max(x => x.Date);
-        }
-
-        private TimeSpan CountUserPlayTime(string userName)
-        {
-            var timeLog = dbContext.ConsoleLogs
-                .Where(x => x.Information.Contains(userName))
-                .Where(x => x.Information.Contains("connected") ||
-                            x.Information.Contains("disconnected"))
-                .OrderByDescending(x => x.Date)
-                .ToList();
-
-            double totalMiliseconds = 0;
-            DateTime playPerionEndTime = DateTime.MinValue;
-
-            for (int i = 0; i < timeLog.Count; i++)
-            {
-                var log = timeLog[i];
-                if (i == 0 && log.Information.Contains("Player connected")) continue;
-
-                if (log.Information.Contains("disconnected"))
-                {
-                    playPerionEndTime = log.Date;
-                    continue;
-                }
-
-                if (playPerionEndTime == DateTime.MinValue)
-                    throw new Exception("playPerionEndTime is DateTime.MinValue");
-
-                totalMiliseconds += (playPerionEndTime - log.Date).TotalMilliseconds;
-            }
-
-            return TimeSpan.FromMilliseconds(totalMiliseconds);
         }
     }
 
