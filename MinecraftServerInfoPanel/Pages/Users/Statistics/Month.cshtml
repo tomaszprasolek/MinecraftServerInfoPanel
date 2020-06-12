@@ -1,0 +1,43 @@
+﻿@page
+@model MinecraftServerInfoPanel.Pages.Users.Statistics.MonthModel
+@{
+    ViewData["Title"] = "Miesięczne statystyki użytkowników";
+}
+
+<form method="get">
+    <input type="hidden" asp-for="Period" value="Month" />
+
+    <div class="form-group">
+        <label for="date">Wybierz miesiąc:</label>
+        <input type="month" asp-for="Month" value="@Model.Month">
+        <button type="submit" class="btn btn-success btn-sm">Pokaż</button>
+    </div>
+</form>
+
+<a asp-page="Month" asp-route-Period="Month" asp-route-Month="@Model.PreviousMonth" class="btn btn-primary btn-sm">Poprzedni miesiąc</a>
+<a asp-page="Month" asp-route-Period="Month" asp-route-Month="@Model.NextMonth" class="btn btn-primary btn-sm">Następny miesiąc</a>
+
+<br />
+<br />
+
+<h5>Czas gry użytkowników w miesiącu: @Model.Month</h5>
+<h6>Dane posortowane od użytkownika, który grał najdłużej.</h6>
+
+<table class="table table-striped table-bordered ">
+    <thead>
+        <tr>
+            <th>Użytkownik</th>
+            <th>Czas gry [hh/mm/ss]</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var user in Model.ViewModel)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.PlayTimeFriendly</td>
+            </tr>
+        }
+    </tbody>
+</table>
