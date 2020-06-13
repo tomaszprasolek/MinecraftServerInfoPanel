@@ -20,9 +20,6 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
         [BindProperty(SupportsGet = true)]
         public string Month { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public TimePeriod Period { get; set; }
-
         public string PreviousMonth => selectedMonth.GetPreviousMonth().ToString();
         public string NextMonth => selectedMonth.GetNextMonth().ToString();
 
@@ -45,7 +42,7 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
             ViewModel = users.Select(x => new UserDayStatisticsViewmodel
             {
                 UserName = x.UserName,
-                PlayTime = playTimeCalculator.CalculateUserPlayTime(x.UserName, Period, selectedMonth.GetFirstDayOfMonth())
+                PlayTime = playTimeCalculator.CalculateUserPlayTime(x.UserName, TimePeriod.Month, selectedMonth.GetFirstDayOfMonth())
             })
             .OrderByDescending(x => x.PlayTime)
             .ToList();
