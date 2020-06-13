@@ -4,9 +4,10 @@
     ViewData["Title"] = "Miesięczne statystyki użytkowników";
 }
 
-<form method="get">
-    <input type="hidden" asp-for="Period" value="Month" />
+@await Component.InvokeAsync("UserStatistcsMenu")
+<hr />
 
+<form method="get">
     <div class="form-group">
         <label for="date">Wybierz miesiąc:</label>
         <input type="month" asp-for="Month" value="@Model.Month">
@@ -14,8 +15,8 @@
     </div>
 </form>
 
-<a asp-page="Month" asp-route-Period="Month" asp-route-Month="@Model.PreviousMonth" class="btn btn-primary btn-sm">Poprzedni miesiąc</a>
-<a asp-page="Month" asp-route-Period="Month" asp-route-Month="@Model.NextMonth" class="btn btn-primary btn-sm">Następny miesiąc</a>
+<a asp-page="Month" asp-route-Month="@Model.PreviousMonth" class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Poprzedni miesiąc</a>
+<a asp-page="Month" asp-route-Month="@Model.NextMonth" class="btn btn-primary btn-sm">Następny miesiąc <i class="fas fa-arrow-right"></i></a>
 
 <br />
 <br />

@@ -20,9 +20,6 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
         [BindProperty(SupportsGet = true)]
         public DateTime Date { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public TimePeriod Period { get; set; }
-
         public string PreviousDay => Date.AddDays(-1).ToString("yyyy-MM-dd");
         public string NextDay => Date.AddDays(1).ToString("yyyy-MM-dd");
 
@@ -44,7 +41,7 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
             ViewModel = users.Select(x => new UserDayStatisticsViewmodel
             {
                 UserName = x.UserName,
-                PlayTime = playTimeCalculator.CalculateUserPlayTime(x.UserName, Period, Date)
+                PlayTime = playTimeCalculator.CalculateUserPlayTime(x.UserName, TimePeriod.Day, Date)
             })
             .OrderByDescending(x => x.PlayTime)
             .ToList();

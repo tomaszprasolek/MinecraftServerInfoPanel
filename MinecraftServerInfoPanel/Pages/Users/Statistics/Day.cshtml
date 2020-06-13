@@ -4,10 +4,10 @@
     ViewData["Title"] = "Dzienne statystyki użytkowników";
 }
 
+@await Component.InvokeAsync("UserStatistcsMenu")
+<hr />
+
 <form method="get">
-
-    <input type="hidden" asp-for="Period" value="Day" />
-
     <div class="form-group">
         <label for="date">Wybierz dzień:</label>
         <input type="date" asp-for="Date" value="@Model.Date.ToString("yyyy-MM-dd")">
@@ -15,8 +15,8 @@
     </div>
 </form>
 
-<a asp-page="Day" asp-route-Period="Day" asp-route-Date="@Model.PreviousDay" class="btn btn-primary btn-sm">Poprzedni dzień</a>
-<a asp-page="Day" asp-route-Period="Day" asp-route-Date="@Model.NextDay" class="btn btn-primary btn-sm">Następny dzień</a>
+<a asp-page="Day" asp-route-Date="@Model.PreviousDay" class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Poprzedni dzień</a>
+<a asp-page="Day" asp-route-Date="@Model.NextDay" class="btn btn-primary btn-sm">Następny dzień <i class="fas fa-arrow-right"></i></a>
 
 <br />
 <br />

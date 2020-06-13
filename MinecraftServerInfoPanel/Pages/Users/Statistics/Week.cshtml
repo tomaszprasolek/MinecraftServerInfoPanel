@@ -4,9 +4,10 @@
     ViewData["Title"] = "Tygodniowe statystyki użytkowników";
 }
 
-<form method="get">
-    <input type="hidden" asp-for="Period" value="Week" />
+@await Component.InvokeAsync("UserStatistcsMenu")
+<hr />
 
+<form method="get">
     <div class="form-group">
         <label for="date">Wybierz dzień:</label>
         <input type="week" asp-for="Week" value="@Model.Week">
@@ -14,8 +15,8 @@
     </div>
 </form>
 
-<a asp-page="Week" asp-route-Period="Week" asp-route-Week="@Model.PreviousWeek" class="btn btn-primary btn-sm">Poprzedni tydzień</a>
-<a asp-page="Week" asp-route-Period="Week" asp-route-Week="@Model.NextWeek" class="btn btn-primary btn-sm">Następny tydzień</a>
+<a asp-page="Week" asp-route-Week="@Model.PreviousWeek" class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Poprzedni tydzień</a>
+<a asp-page="Week" asp-route-Week="@Model.NextWeek" class="btn btn-primary btn-sm">Następny tydzień <i class="fas fa-arrow-right"></i></a>
 
 <br />
 <br />

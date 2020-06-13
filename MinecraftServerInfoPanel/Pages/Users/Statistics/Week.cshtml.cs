@@ -21,9 +21,6 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
         [BindProperty(SupportsGet = true)]
         public string Week { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public TimePeriod Period { get; set; }
-
         public string PreviousWeek => selectedWeek.GetPreviousWeek().ToString();
         public string NextWeek => selectedWeek.GetNextWeek().ToString();
 
@@ -48,7 +45,7 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
             ViewModel = users.Select(x => new UserDayStatisticsViewmodel
             {
                 UserName = x.UserName,
-                PlayTime = playTimeCalculator.CalculateUserPlayTime(x.UserName, Period, selectedWeek.GetFirstDayOfWeek())
+                PlayTime = playTimeCalculator.CalculateUserPlayTime(x.UserName, TimePeriod.Week, selectedWeek.GetFirstDayOfWeek())
             })
             .OrderByDescending(x => x.PlayTime)
             .ToList();

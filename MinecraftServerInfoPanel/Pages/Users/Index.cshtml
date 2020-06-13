@@ -4,12 +4,7 @@
     ViewData["Title"] = "Użytkownicy";
 }
 
-Statystyka:
-<a asp-page="Statistics/Day" asp-route-period="Day" class="btn btn-primary btn-sm">Dzienna</a>
-<a asp-page="Statistics/Week" asp-route-period="Week" class="btn btn-primary btn-sm">Tygodniowa</a>
-<a asp-page="Statistics/Month" asp-route-period="Month" class="btn btn-primary btn-sm">Miesięczna</a>
-
-<br />
+@await Component.InvokeAsync("UserStatistcsMenu")
 <br />
 
 <table class="table table-striped">
@@ -24,16 +19,16 @@ Statystyka:
     <tbody>
         @foreach (var user in Model.Users)
         {
-        <tr>
-            <td>@user.Name</td>
-            <td>@user.LastTimeOnServer</td>
-            <td>@user.PlayTimeFriendly</td>
-            <td>
-                @user.Description
-                <a asp-page="Edit" 
-                   asp-route-id="@user.Id"><i class="fas fa-edit"></i></a>
-            </td>
-        </tr>
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.LastTimeOnServer</td>
+                <td>@user.PlayTimeFriendly</td>
+                <td>
+                    @user.Description
+                    <a asp-page="Edit"
+                       asp-route-id="@user.Id"><i class="fas fa-edit"></i></a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
