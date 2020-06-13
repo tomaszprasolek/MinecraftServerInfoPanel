@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MinecraftServerInfoPanel.BL.PlayTimeCalculator;
 using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -60,15 +61,7 @@ namespace MinecraftServerInfoPanel.Pages.Users
         public string Name { get; set; }
         public TimeSpan PlayTime { get; set; }
 
-        public string PlayTimeFriendly
-        {
-            get
-            {
-                if (PlayTime.TotalDays >= 1)
-                    return $"{PlayTime:%d} dni {PlayTime:hh\\:mm\\:ss}";
-                return $"{PlayTime:hh\\:mm\\:ss}";
-            }
-        }
+        public string PlayTimeFriendlyString => PlayTime.ToFriendlyString();
 
         public DateTime LastTimeOnServer { get; set; }
 
