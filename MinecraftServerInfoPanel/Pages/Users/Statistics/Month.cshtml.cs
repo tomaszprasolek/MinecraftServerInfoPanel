@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MinecraftServerInfoPanel.BL.PlayTimeCalculator;
 using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
 
         private Month selectedMonth;
 
-        public List<UserDayStatisticsViewmodel> ViewModel { get; set; }
+        public List<UserTimeViewModel> ViewModel { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string Month { get; set; }
@@ -39,7 +40,7 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
             if (string.IsNullOrWhiteSpace(Month))
                 Month = selectedMonth.ToString();
 
-            ViewModel = users.Select(x => new UserDayStatisticsViewmodel
+            ViewModel = users.Select(x => new UserTimeViewModel
             {
                 UserName = x.UserName,
                 PlayTime = playTimeCalculator.CalculateUserPlayTime(x.UserName, TimePeriod.Month, selectedMonth.GetFirstDayOfMonth())

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MinecraftServerInfoPanel.BL.PlayTimeCalculator;
 using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,7 +17,7 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
 
         private Week selectedWeek;
 
-        public List<UserDayStatisticsViewmodel> ViewModel { get; set; }
+        public List<UserTimeViewModel> ViewModel { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string Week { get; set; }
@@ -42,7 +43,7 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
             if (string.IsNullOrWhiteSpace(Week))
                 Week = selectedWeek.ToString();
 
-            ViewModel = users.Select(x => new UserDayStatisticsViewmodel
+            ViewModel = users.Select(x => new UserTimeViewModel
             {
                 UserName = x.UserName,
                 PlayTime = playTimeCalculator.CalculateUserPlayTime(x.UserName, TimePeriod.Week, selectedWeek.GetFirstDayOfWeek())

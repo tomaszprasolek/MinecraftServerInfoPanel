@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MinecraftServerInfoPanel.BL.PlayTimeCalculator;
 using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
         private readonly MinecraftDbContext dbContext;
         private readonly IPlayTimeCalculator playTimeCalculator;
 
-        public List<UserDayStatisticsViewmodel> ViewModel { get; set; }
+        public List<UserTimeViewModel> ViewModel { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public DateTime Date { get; set; }
@@ -38,7 +39,7 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
             if (Date == DateTime.MinValue)
                 Date = DateTime.Now.Date;
 
-            ViewModel = users.Select(x => new UserDayStatisticsViewmodel
+            ViewModel = users.Select(x => new UserTimeViewModel
             {
                 UserName = x.UserName,
                 PlayTime = playTimeCalculator.CalculateUserPlayTime(x.UserName, TimePeriod.Day, Date)
@@ -47,23 +48,6 @@ namespace MinecraftServerInfoPanel.Pages.Users.Statistics
             .ToList();
 
             return Page();
-        }
-    }
-
-    public class UserDayStatisticsViewmodel
-    {
-        public string UserName { get; set; }
-
-        public TimeSpan PlayTime { get; set; }
-
-        public string PlayTimeFriendly
-        {
-            get 
-            {
-                if (PlayTime.TotalDays >= 1)
-                    return $"{PlayTime:%d} dni {PlayTime:hh\\:mm\\:ss}";
-                return $"{PlayTime:hh\\:mm\\:ss}";
-            }
         }
     }
 }
