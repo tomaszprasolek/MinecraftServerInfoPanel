@@ -4,6 +4,8 @@
     ViewData["Title"] = "Dzienne statystyki użytkowników";
 }
 
+@await Component.InvokeAsync("UserStatistcsMenu")
+
 <form method="get">
 
     <input type="hidden" asp-for="Period" value="Day" />
