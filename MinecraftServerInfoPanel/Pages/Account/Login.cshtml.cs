@@ -38,8 +38,11 @@ namespace MinecraftServerInfoPanel.Pages.Account
             if (Password != configuration["Password"])
             {
                 ModelState.AddModelError("Password", "Nieprawidłowe hasło!");
+                Password = string.Empty;
                 return Page();
             }
+
+            returnUrl = returnUrl ?? Url.Content("~/");
 
             var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             identity.AddClaim(new Claim(ClaimTypes.Name, "Tomo"));
@@ -47,9 +50,7 @@ namespace MinecraftServerInfoPanel.Pages.Account
             var principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-            if (string.IsNullOrWhiteSpace(returnUrl) == false && returnUrl != "/")
-                return RedirectToPage(returnUrl);
-            return RedirectToPage("../Index");
+            return LocalRedirect(returnUrl);
         }
     }
 }
