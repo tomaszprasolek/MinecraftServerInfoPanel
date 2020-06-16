@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using MinecraftServerInfoPanel.BL.EmailSender;
 using MinecraftServerInfoPanel.Database;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +15,14 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityEmailSender
     {
         private readonly MinecraftDbContext dbContext;
         private readonly IEmailSender emailSender;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public RecentActivityEmailSender(MinecraftDbContext dbContext, IEmailSender emailSender)
+        public RecentActivityEmailSender(MinecraftDbContext dbContext, IEmailSender emailSender,
+            IWebHostEnvironment webHostEnvironment)
         {
             this.dbContext = dbContext;
             this.emailSender = emailSender;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         public async Task Send()
@@ -40,34 +45,25 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityEmailSender
 
         private async Task SendEmailWithRecentActivity(List<DbConsoleLog> logs)
         {
-            var htmlBody = new StringBuilder(392);
-            htmlBody.AppendLine(@"<table class=""table table-striped"">");
-            htmlBody.AppendLine(@"    <thead>");
-            htmlBody.AppendLine(@"        <tr>");
-            htmlBody.AppendLine(@"            <th scope=""col"">Data</th>");
-            htmlBody.AppendLine(@"            <th scope=""col"">Informacja</th>");
-            htmlBody.AppendLine(@"        </tr>");
-            htmlBody.AppendLine(@"    </thead>");
-            htmlBody.AppendLine(@"    <tbody>");
+            var tableBody = new StringBuilder(392);
 
             for (int i = 0; i < logs.Count; i++)
             {
-                htmlBody.AppendLine(@"            <tr>");
-                htmlBody.AppendLine(@$"                <td>{logs[i].Date}</td>");
-                htmlBody.AppendLine(@$"                <td>{logs[i].Information}</td>");
-                htmlBody.AppendLine(@"            </tr>");
+                tableBody.AppendLine(@"            <tr>");
+                tableBody.AppendLine(@$"                <td>{logs[i].Date}</td>");
+                tableBody.AppendLine(@$"                <td>{logs[i].Information}</td>");
+                tableBody.AppendLine(@"            </tr>");
             }
-
-            htmlBody.AppendLine(@"    </tbody>");
-            htmlBody.AppendLine(@"</table>");
-
+           
+            string htmlBody = GetEmailTemplate()
+                .Replace("[TableBody]", tableBody.ToString());
 
             var emails = dbContext.Emails.Select(x => x.EmailAddress).ToList();
 
             for (int i = 0; i < emails.Count; i++)
             {
                 await emailSender
-                    .SendEmailAsync(emails[i], "Ostatnia aktywność na serwerze", htmlBody.ToString());
+                    .SendEmailAsync(emails[i], "Ostatnia aktywność na serwerze", htmlBody);
             }
         }
 
@@ -80,6 +76,12 @@ namespace MinecraftServerInfoPanel.BL.RecentActivityEmailSender
             }
 
             dbContext.SaveChanges();
+        }
+
+        private string GetEmailTemplate()
+        {
+            string emailTemplatePath = Path.Combine(webHostEnvironment.WebRootPath, @"emailTemplates\RecentActivity.html");
+            return File.ReadAllText(emailTemplatePath);
         }
     }
 }
