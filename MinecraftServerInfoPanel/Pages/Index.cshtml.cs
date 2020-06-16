@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using MinecraftServerInfoPanel.BL.RecentActivityChecker;
 using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MinecraftServerInfoPanel.Pages
 {
@@ -17,7 +19,7 @@ namespace MinecraftServerInfoPanel.Pages
         private readonly IRecentActivityChecker recentActivityChecker;
         private readonly MinecraftDbContext dbContext;
 
-        public List<DbConsoleLog> Logs { get; set; }
+        public List<ServerLogViewModel> Logs { get; set; }
 
         [TempData]
         public string Message { get; set; }
@@ -34,7 +36,15 @@ namespace MinecraftServerInfoPanel.Pages
         public void OnGet()
         {
             _logger.LogInformation("Get all saved Minecraft server logs");
-            Logs = dbContext.ConsoleLogs.OrderByDescending(x => x.Date).ToList();
+
+            Logs = dbContext.ConsoleLogs
+                .Select(x => new ServerLogViewModel
+                {
+                    Date = x.Date,
+                    Information = HttpUtility.HtmlDecode(x.Information)
+                })
+                .OrderByDescending(x => x.Date)
+                .ToList();
         }
 
         public async Task<IActionResult> OnPostAsync()
