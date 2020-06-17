@@ -24,7 +24,6 @@ namespace MinecraftServerInfoPanel.BL
         {
             while (stoppingToken.IsCancellationRequested == false)
             {
-                logger.LogInformation($"Start background task...");
                 await DoWork();
                 await Task.Delay(1_500_000, stoppingToken); // 1_500_000 ms == 25 min
             }
@@ -32,7 +31,7 @@ namespace MinecraftServerInfoPanel.BL
 
         private async Task DoWork()
         {
-            logger.LogInformation($"DoWork method start.");
+            logger.LogInformation($"Start background service: CheckConsoleBackgroundService");
 
             using (var scope = serviceScopeFactory.CreateScope())
             {
@@ -42,7 +41,7 @@ namespace MinecraftServerInfoPanel.BL
                 await recentActivityChecker.CheckAsync();
             }
 
-            logger.LogInformation($"DoWork method end.");
+            logger.LogInformation($"End background service: CheckConsoleBackgroundService");
         }
     }
 }

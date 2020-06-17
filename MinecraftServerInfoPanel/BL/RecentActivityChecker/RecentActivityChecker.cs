@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using MinecraftServerInfoPanel.BL.RecentActivityEmailSender;
 using MinecraftServerInfoPanel.Database;
 using MinecraftServerInfoPanel.Helpers;
-using Org.BouncyCastle.Math.EC.Rfc7748;
 using System;
 using System.Collections.Generic;
 using System.Linq;
