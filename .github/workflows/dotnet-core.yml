@@ -23,3 +23,14 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+    - name: Publish
+      run: dotnet publish -c Release -o ./publish
+    - name: Varible Substitution
+      uses: microsoft/variable-substitution@v1 
+      with:
+        files: '**/appsettings.json'
+      env:
+        Serilog.WriteTo.1.Args.configureLogger.WriteTo.0.Args.connectionString: "connString"
+    - uses: actions/upload-artifact@v2
+      with:
+        path: ./publish/
