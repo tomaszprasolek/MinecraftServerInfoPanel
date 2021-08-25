@@ -11,7 +11,7 @@ using MinecraftServerInfoPanel.BL.EmailSender;
 using MinecraftServerInfoPanel.BL.PlayTimeCalculator;
 using MinecraftServerInfoPanel.BL.RecentActivityChecker;
 using MinecraftServerInfoPanel.BL.RecentActivityEmailSender;
-using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.DataLayer;
 using Serilog;
 using System;
 using System.IO;
@@ -38,10 +38,10 @@ namespace MinecraftServerInfoPanel
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie();
 
-            services.AddDbContextPool<MinecraftDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("MinecraftDb"));
-            });
+            services.AddDbContextPool<MinecraftDbContext>(options => { });
+            //{
+            //    options.UseSqlServer(Configuration.GetConnectionString("MinecraftDb"));
+            //});
 
             services.AddSingleton<IConsoleDataDowloader, ConsoleDataDowloader>();
             services.AddScoped<IEmailSender, EmailSender>();

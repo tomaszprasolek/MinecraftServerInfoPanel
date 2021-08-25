@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.DataLayer;
 
 namespace MinecraftServerInfoPanel.Migrations
 {
     [DbContext(typeof(MinecraftDbContext))]
-    [Migration("20200531051650_addEmailTable")]
-    partial class addEmailTable
+    [Migration("20200530141205_fix_ServerUser_table")]
+    partial class fix_ServerUser_table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,21 +43,6 @@ namespace MinecraftServerInfoPanel.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ConsoleLogs");
-                });
-
-            modelBuilder.Entity("MinecraftServerInfoPanel.Database.Email", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("EmailAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Emails");
                 });
 
             modelBuilder.Entity("MinecraftServerInfoPanel.Database.Log", b =>
