@@ -38,10 +38,10 @@ namespace MinecraftServerInfoPanel
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie();
 
-            services.AddDbContextPool<MinecraftDbContext>(options => { });
-            //{
-            //    options.UseSqlServer(Configuration.GetConnectionString("MinecraftDb"));
-            //});
+            services.AddDbContextPool<MinecraftDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("MinecraftDb"));
+            });
 
             services.AddSingleton<IConsoleDataDowloader, ConsoleDataDowloader>();
             services.AddScoped<IEmailSender, EmailSender>();

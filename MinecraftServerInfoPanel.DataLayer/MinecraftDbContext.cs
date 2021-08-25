@@ -6,14 +6,20 @@ namespace MinecraftServerInfoPanel.DataLayer
 {
     public class MinecraftDbContext : DbContext
     {
+        public MinecraftDbContext(DbContextOptions<MinecraftDbContext> options)
+            : base(options)
+        {
+
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", true, true);
+            //var builder = new ConfigurationBuilder()
+            //    .AddJsonFile("appsettings.json", true, true);
 
-            var config = builder.Build();
+            //var config = builder.Build();
 
-            optionsBuilder.UseSqlServer(config["ConnectionString"]);
+            //optionsBuilder.UseSqlServer(config["ConnectionString"]);
         }
 
         public DbSet<DbConsoleLog> ConsoleLogs { get; set; }
