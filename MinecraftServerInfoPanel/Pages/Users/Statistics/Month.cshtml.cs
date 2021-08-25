@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MinecraftServerInfoPanel.BL.PlayTimeCalculator;
-using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.DataLayer;
 using MinecraftServerInfoPanel.Models;
 using MinecraftServerInfoPanel.ViewModels;
 using System.Collections.Generic;

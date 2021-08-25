@@ -1,4 +1,4 @@
-﻿using MinecraftServerInfoPanel.Database;
+﻿using MinecraftServerInfoPanel.DataLayer;
 using MinecraftServerInfoPanel.Helpers;
 using System;
 using System.Linq;

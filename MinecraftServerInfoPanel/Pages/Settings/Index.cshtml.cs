@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.DataLayer;
+using MinecraftServerInfoPanel.Domain.Entities;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.DataLayer;
+using MinecraftServerInfoPanel.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace MinecraftServerInfoPanel.Pages.Settings

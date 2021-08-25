@@ -1,11 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace MinecraftServerInfoPanel.Database
+namespace MinecraftServerInfoPanel.Domain.Entities
 {
     public class DbConsoleLog
     {
-        [Key]
         public int Id { get; set; }
 
         public DateTime Date { get; set; }

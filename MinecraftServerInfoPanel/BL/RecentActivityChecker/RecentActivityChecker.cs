@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MinecraftServerInfoPanel.BL.RecentActivityEmailSender;
-using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.DataLayer;
+using MinecraftServerInfoPanel.Domain.Entities;
 using MinecraftServerInfoPanel.Helpers;
 using System;
 using System.Collections.Generic;

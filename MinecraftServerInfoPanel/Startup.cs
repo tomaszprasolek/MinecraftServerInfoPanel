@@ -11,7 +11,7 @@ using MinecraftServerInfoPanel.BL.EmailSender;
 using MinecraftServerInfoPanel.BL.PlayTimeCalculator;
 using MinecraftServerInfoPanel.BL.RecentActivityChecker;
 using MinecraftServerInfoPanel.BL.RecentActivityEmailSender;
-using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.DataLayer;
 using Serilog;
 using System;
 using System.IO;

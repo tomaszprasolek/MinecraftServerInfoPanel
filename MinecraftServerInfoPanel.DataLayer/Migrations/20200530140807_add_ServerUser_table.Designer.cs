@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.DataLayer;
 
 namespace MinecraftServerInfoPanel.Migrations
 {
     [DbContext(typeof(MinecraftDbContext))]
-    [Migration("20200527123220_add_log_table")]
-    partial class add_log_table
+    [Migration("20200530140807_add_ServerUser_table")]
+    partial class add_ServerUser_table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,6 +76,24 @@ namespace MinecraftServerInfoPanel.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Log");
+                });
+
+            modelBuilder.Entity("MinecraftServerInfoPanel.Database.ServerUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("Xuid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServerUsers");
                 });
 #pragma warning restore 612, 618
         }

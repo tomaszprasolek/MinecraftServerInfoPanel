@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using MinecraftServerInfoPanel.BL.EmailSender;
-using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.DataLayer;
+using MinecraftServerInfoPanel.Domain.Entities;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

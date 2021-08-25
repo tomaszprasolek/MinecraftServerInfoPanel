@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.DataLayer;
 
 namespace MinecraftServerInfoPanel.Migrations
 {
     [DbContext(typeof(MinecraftDbContext))]
-    [Migration("20200524122217_initial_create")]
-    partial class initial_create
+    [Migration("20200527123220_add_log_table")]
+    partial class add_log_table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace MinecraftServerInfoPanel.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("MinecraftServerInfoPanel.Database.ConsoleLog", b =>
+            modelBuilder.Entity("MinecraftServerInfoPanel.Database.DbConsoleLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,6 +43,39 @@ namespace MinecraftServerInfoPanel.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ConsoleLogs");
+                });
+
+            modelBuilder.Entity("MinecraftServerInfoPanel.Database.Log", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Exception")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Level")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogEvent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MessageTemplate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Properties")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("TimeStamp")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Log");
                 });
 #pragma warning restore 612, 618
         }

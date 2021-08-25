@@ -3,25 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.DataLayer;
 
 namespace MinecraftServerInfoPanel.Migrations
 {
     [DbContext(typeof(MinecraftDbContext))]
-    [Migration("20200605055538_addDecsriptionColumnToServerUsersTable")]
-    partial class addDecsriptionColumnToServerUsersTable
+    partial class MinecraftDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("MinecraftServerInfoPanel.Database.DbConsoleLog", b =>
+            modelBuilder.Entity("MinecraftServerInfoPanel.Domain.Entities.DbConsoleLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,7 +43,7 @@ namespace MinecraftServerInfoPanel.Migrations
                     b.ToTable("ConsoleLogs");
                 });
 
-            modelBuilder.Entity("MinecraftServerInfoPanel.Database.Email", b =>
+            modelBuilder.Entity("MinecraftServerInfoPanel.Domain.Entities.Email", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,7 +58,7 @@ namespace MinecraftServerInfoPanel.Migrations
                     b.ToTable("Emails");
                 });
 
-            modelBuilder.Entity("MinecraftServerInfoPanel.Database.Log", b =>
+            modelBuilder.Entity("MinecraftServerInfoPanel.Domain.Entities.Log", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,10 +88,10 @@ namespace MinecraftServerInfoPanel.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Log");
+                    b.ToTable("Logs");
                 });
 
-            modelBuilder.Entity("MinecraftServerInfoPanel.Database.ServerUser", b =>
+            modelBuilder.Entity("MinecraftServerInfoPanel.Domain.Entities.ServerUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -104,12 +102,10 @@ namespace MinecraftServerInfoPanel.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Xuid")
-                        .HasColumnType("nvarchar(16)")
-                        .HasMaxLength(16);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
