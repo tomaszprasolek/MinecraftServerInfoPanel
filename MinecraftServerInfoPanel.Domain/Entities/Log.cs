@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MinecraftServerInfoPanel.Database
+namespace MinecraftServerInfoPanel.Domain.Entities
 {
     [Table("Log")]
     public class Log

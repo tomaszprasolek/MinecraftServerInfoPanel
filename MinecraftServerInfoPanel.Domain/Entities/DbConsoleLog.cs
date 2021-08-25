@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace MinecraftServerInfoPanel.Database
+namespace MinecraftServerInfoPanel.Domain.Entities
 {
     public class DbConsoleLog
     {

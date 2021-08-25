@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MinecraftServerInfoPanel.BL.EmailSender;
 using MinecraftServerInfoPanel.Database;
+using MinecraftServerInfoPanel.Domain.Entities;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MinecraftServerInfoPanel.Domain.Entities;
 
 namespace MinecraftServerInfoPanel.Database
 {

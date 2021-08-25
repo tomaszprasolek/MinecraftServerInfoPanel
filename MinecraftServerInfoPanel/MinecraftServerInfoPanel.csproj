@@ -24,6 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MinecraftServerInfoPanel.Domain\MinecraftServerInfoPanel.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="appsettings.json">
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
