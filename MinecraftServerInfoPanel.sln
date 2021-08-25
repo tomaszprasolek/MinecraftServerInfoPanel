@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinecraftServerInfoPanel", "MinecraftServerInfoPanel\MinecraftServerInfoPanel.csproj", "{5F241208-89A8-4D17-8DC3-3EF3B8CD4B13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinecraftServerInfoPanel", "MinecraftServerInfoPanel\MinecraftServerInfoPanel.csproj", "{5F241208-89A8-4D17-8DC3-3EF3B8CD4B13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinecraftServerInfoPanel.Tests", "MinecraftServerInfoPanel.Tests\MinecraftServerInfoPanel.Tests.csproj", "{6BB733E8-CC3F-45DC-B66C-20FDB4DEB046}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5F241208-89A8-4D17-8DC3-3EF3B8CD4B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F241208-89A8-4D17-8DC3-3EF3B8CD4B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F241208-89A8-4D17-8DC3-3EF3B8CD4B13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BB733E8-CC3F-45DC-B66C-20FDB4DEB046}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BB733E8-CC3F-45DC-B66C-20FDB4DEB046}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BB733E8-CC3F-45DC-B66C-20FDB4DEB046}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BB733E8-CC3F-45DC-B66C-20FDB4DEB046}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
